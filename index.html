@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>VERSION by STORES #3 ミッションクイズ</title>
+
+<style>
+body {
+  font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
+  margin: 0;
+  padding: 24px 0 40px;
+  color: #1e2b4f;
+  background:
+    radial-gradient(circle at top left, rgba(13,110,253,.12), transparent 18%),
+    radial-gradient(circle at top right, rgba(244,67,54,.12), transparent 20%),
+    linear-gradient(180deg, #f8fbff 0%, #eef4ff 55%, #f7f8fb 100%);
+  min-height: 100vh;
+}
+
+.header,
+.container {
+  max-width: 450px;
+  width: 92%;
+  margin: 0 auto 16px;
+  box-sizing: border-box;
+}
+
+.header {
+  padding: 22px;
+  border-radius: 26px;
+  background: #051a40;
+  color: #fff;
+  box-shadow: 0 20px 42px rgba(15,30,70,.16);
+  overflow: hidden;
+  position: relative;
+}
+
+.header::before,
+.header::after {
+  content: "";
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  opacity: .22;
+}
+
+.header::before {
+  background: #3c6fff;
+  top: -50px;
+  left: -50px;
+}
+
+.header::after {
+  background: #ff4f79;
+  right: -50px;
+  bottom: -50px;
+}
+
+.header-inner {
+  position: relative;
+  z-index: 1;
+}
+
+.brand-mark {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.12);
+  font-size: .88rem;
+  font-weight: 800;
+}
+
+.brand-mark span {
+  width: 26px;
+  height: 26px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background: #ff4f79;
+}
+
+.header h1 {
+  margin: 14px 0 8px;
+  font-size: 1.65rem;
+}
+
+.header p {
+  margin: 0;
+  line-height: 1.7;
+  font-size: .94rem;
+  color: rgba(255,255,255,.88);
+}
+
+.container {
+  background: #fff;
+  border-radius: 28px;
+  padding: 24px;
+  box-shadow: 0 18px 44px rgba(72,84,104,.12);
+}
+
+.status-panel {
+  margin-bottom: 20px;
+}
+
+.status-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.status-text {
+  font-weight: 800;
+  font-size: .95rem;
+}
+
+.hint-btn {
+  border: 1px solid #dbe5ff;
+  background: #eef5ff;
+  color: #1d5cff;
+  border-radius: 999px;
+  padding: 10px 14px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.progress-bar {
+  height: 10px;
+  border-radius: 999px;
+  background: #eef4ff;
+  overflow: hidden;
+  margin-top: 10px;
+}
+
+.progress-fill {
+  width: 0%;
+  height: 100%;
+  background: linear-gradient(90deg, #1d5cff, #4a86ff);
+  transition: width .25s ease;
+}
+
+.question {
+  margin-bottom: 22px;
+  padding: 18px;
+  border-radius: 22px;
+  background: #fbfdff;
+  border: 1px solid rgba(42,79,198,.13);
+}
+
+.question h3 {
+  margin: 0 0 14px;
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+.options {
+  display: grid;
+  gap: 12px;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  border-radius: 18px;
+  border: 1px solid #d8e5ff;
+  background: #fff;
+  cursor: pointer;
+  transition: .2s ease;
+}
+
+.option::before {
+  content: "";
+  width: 18px;
+  height: 18px;
+  border: 2px solid #9dbdff;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.option.selected {
+  border-color: #1d5cff;
+  background: #ebf1ff;
+  box-shadow: 0 10px 22px rgba(29,92,255,.12);
+}
+
+.option.selected::before {
+  background: #1d5cff;
+  box-shadow: inset 0 0 0 4px #fff;
+}
+
+.option input {
+  display: none;
+}
+
+.option label {
+  flex: 1;
+  cursor: pointer;
+  line-height: 1.6;
+}
+
+.submit-btn,
+.retry-btn {
+  width: 100%;
+  border-radius: 16px;
+  padding: 16px;
+  font-size: 1.05rem;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.submit-btn {
+  color: #fff;
+  border: none;
+  background: linear-gradient(135deg, #1d5cff, #3a79ff);
+  box-shadow: 0 14px 28px rgba(29,92,255,.22);
+}
+
+.submit-btn:disabled {
+  background: #cad6f3;
+  color: #7a86a7;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+.result {
+  display: none;
+  text-align: center;
+}
+
+.result-card {
+  position: relative;
+  overflow: hidden;
+  min-height: 460px;
+  border-radius: 30px;
+  padding: 44px 24px 28px;
+  background: #fff;
+  box-shadow: 0 22px 52px rgba(36,74,147,.14);
+}
+
+.success-content,
+.failure-content {
+  position: relative;
+  z-index: 5;
+}
+
+.hidden {
+  display: none;
+}
+
+.crown {
+  font-size: 4rem;
+  margin-bottom: 12px;
+  animation: crown-pop .8s cubic-bezier(.2,1.6,.4,1) both;
+}
+
+@keyframes crown-pop {
+  0% { transform: translateY(20px) scale(0); opacity: 0; }
+  70% { transform: translateY(-8px) scale(1.2); opacity: 1; }
+  100% { transform: translateY(0) scale(1); }
+}
+
+.success {
+  color: #ff3b6b;
+  font-size: 2rem;
+  margin: 0;
+  letter-spacing: -.04em;
+}
+
+.failure {
+  color: #d32f2f;
+  font-size: 1.8rem;
+}
+
+.result p {
+  line-height: 1.9;
+  color: #405174;
+}
+
+.retry-btn {
+  margin-top: 24px;
+  background: #fff;
+  color: #1d5cff;
+  border: 2px solid #1d5cff;
+}
+
+/* クラッカー */
+.cracker {
+  position: absolute;
+  bottom: 36px;
+  font-size: 4.2rem;
+  opacity: 0;
+  z-index: 4;
+  pointer-events: none;
+}
+
+.cracker.left {
+  left: -90px;
+  transform: rotate(-28deg);
+}
+
+.cracker.right {
+  right: -90px;
+  transform: rotate(28deg) scaleX(-1);
+}
+
+.cracker.left.animate {
+  animation: cracker-left .75s cubic-bezier(.16,1.35,.35,1) forwards;
+}
+
+.cracker.right.animate {
+  animation: cracker-right .75s cubic-bezier(.16,1.35,.35,1) forwards;
+}
+
+@keyframes cracker-left {
+  0% { opacity: 0; transform: translateX(0) rotate(-45deg) scale(.3); }
+  55% { opacity: 1; transform: translateX(82px) rotate(-22deg) scale(1.28); }
+  75% { transform: translateX(70px) rotate(-30deg) scale(.96); }
+  100% { opacity: 1; transform: translateX(76px) rotate(-28deg) scale(1); }
+}
+
+@keyframes cracker-right {
+  0% { opacity: 0; transform: translateX(0) rotate(45deg) scaleX(-1) scale(.3); }
+  55% { opacity: 1; transform: translateX(-82px) rotate(22deg) scaleX(-1) scale(1.28); }
+  75% { transform: translateX(-70px) rotate(30deg) scaleX(-1) scale(.96); }
+  100% { opacity: 1; transform: translateX(-76px) rotate(28deg) scaleX(-1) scale(1); }
+}
+
+/* 衝撃波 */
+.impact {
+  position: absolute;
+  left: 50%;
+  top: 48%;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.9);
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+  z-index: 3;
+}
+
+.impact.active {
+  animation: impact-boom .55s ease-out forwards;
+}
+
+@keyframes impact-boom {
+  0% { opacity: 1; transform: translate(-50%, -50%) scale(0); }
+  45% { opacity: .9; transform: translate(-50%, -50%) scale(8); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(18); }
+}
+
+/* 紙吹雪 */
+.confetti-container {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.confetti {
+  position: absolute;
+  top: 62%;
+  left: 50%;
+  opacity: 0;
+  border-radius: 3px;
+  transform-origin: center;
+}
+
+.confetti.animate {
+  animation: confetti-boom var(--duration) cubic-bezier(.12,.75,.32,1) forwards;
+}
+
+@keyframes confetti-boom {
+  0% {
+    opacity: 0;
+    transform: translate(0,0) rotate(0deg) scale(.4);
+  }
+  10% {
+    opacity: 1;
+    transform: translate(calc(var(--x) * .55), calc(var(--y) * .65)) rotate(var(--r)) scale(1.2);
+  }
+  32% {
+    opacity: 1;
+    transform: translate(var(--x), var(--y)) rotate(calc(var(--r) + 180deg)) scale(1);
+  }
+  70% {
+    opacity: 1;
+    transform: translate(calc(var(--x) * 1.25), calc(var(--y) + 220px)) rotate(calc(var(--r) + 420deg)) scale(.95);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(calc(var(--x) * 1.35), 620px) rotate(calc(var(--r) + 720deg)) scale(.75);
+  }
+}
+</style>
+</head>
+
+<body>
+<div class="header">
+  <div class="header-inner">
+    <div class="brand-mark"><span>#3</span>VERSION by STORES</div>
+    <h1>ミッションクイズ！</h1>
+    <p>
+      クイズに全問正解するとレアアイテムが当たるガチャがまわせるよ★<br>
+      全問正解したらカプセルガチャの近くにいるスタッフに3問正解の画面を見せてください♪♪
+    </p>
+  </div>
+</div>
+
+<div class="container quiz" id="quiz">
+  <div class="status-panel">
+    <div class="status-row">
+      <div class="status-text">全3問中 <strong id="answered-count">0</strong>問回答済み</div>
+      <button type="button" class="hint-btn" id="hint-btn">ヒントを見る</button>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+  </div>
+
+  <div class="question">
+    <h3>問題1：みんなのFunパネルをチェック！この中で“実際にかぶっていたFun”はどれ？</h3>
+    <div class="options">
+      <div class="option" data-question="1" data-value="麻雀 🀄"><input type="radio"><label>麻雀 🀄</label></div>
+      <div class="option" data-question="1" data-value="毒ガエル 🐸"><input type="radio"><label>毒ガエル 🐸</label></div>
+      <div class="option" data-question="1" data-value="フィールサイクル 🚲"><input type="radio"><label>フィールサイクル 🚲</label></div>
+    </div>
+  </div>
+
+  <div class="question">
+    <h3>問題2：フォトゾーンをチェック！置いていないフォトプロップスはどれ？</h3>
+    <div class="options">
+      <div class="option" data-question="2" data-value="ありがとんかつ！"><input type="radio"><label>ありがとんかつ！</label></div>
+      <div class="option" data-question="2" data-value="わいわい"><input type="radio"><label>わいわい</label></div>
+      <div class="option" data-question="2" data-value="ありがとぉねぇ"><input type="radio"><label>ありがとぉねぇ</label></div>
+      <div class="option" data-question="2" data-value="ありがたや〜"><input type="radio"><label>ありがたや〜</label></div>
+    </div>
+  </div>
+
+  <div class="question">
+    <h3>問題3：あのときは助かったよ展に貼れるシールは？</h3>
+    <div class="options">
+      <div class="option" data-question="3" data-value="♡"><input type="radio"><label>♡</label></div>
+      <div class="option" data-question="3" data-value="★"><input type="radio"><label>★</label></div>
+      <div class="option" data-question="3" data-value="✌"><input type="radio"><label>✌</label></div>
+      <div class="option" data-question="3" data-value="♪"><input type="radio"><label>♪</label></div>
+    </div>
+  </div>
+
+  <button class="submit-btn" id="submit-btn" disabled>採点する</button>
+</div>
+
+<div class="container result" id="result">
+  <div class="result-card">
+    <div class="impact" id="impact"></div>
+    <div class="confetti-container" id="confetti-container"></div>
+
+    <div id="success-content" class="hidden success-content">
+      <div class="cracker left">🎉</div>
+      <div class="cracker right">🎉</div>
+      <div class="crown">👑</div>
+      <h2 class="success">ミッションクリア！</h2>
+      <p>
+        全問正解おめでとうございます！<br>
+        スタッフにこの画面を見せて、<br>
+        ガチャにチャレンジしてね♪
+      </p>
+      <button class="retry-btn" onclick="retry()">もう一度チャレンジする</button>
+    </div>
+
+    <div id="failure-content" class="hidden failure-content">
+      <h2 class="failure">あと少し！</h2>
+      <p>
+        どこかの答えが違うみたいです。<br>
+        会場をもう一度チェックしてみてね！
+      </p>
+      <button class="retry-btn" onclick="retry()">もう一度チャレンジする</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const answers = {
+  1: "フィールサイクル 🚲",
+  2: "ありがたや〜",
+  3: "♡"
+};
+
+let selectedAnswers = {};
+
+const quiz = document.getElementById("quiz");
+const result = document.getElementById("result");
+const submitBtn = document.getElementById("submit-btn");
+const answeredCount = document.getElementById("answered-count");
+const progressFill = document.getElementById("progress-fill");
+
+document.querySelectorAll(".option").forEach(option => {
+  option.addEventListener("click", () => {
+    const question = option.dataset.question;
+    const value = option.dataset.value;
+
+    selectedAnswers[question] = value;
+
+    option.parentElement.querySelectorAll(".option").forEach(opt => {
+      opt.classList.remove("selected");
+      opt.querySelector("input").checked = false;
+    });
+
+    option.classList.add("selected");
+    option.querySelector("input").checked = true;
+
+    updateProgress();
+  });
+});
+
+document.getElementById("hint-btn").addEventListener("click", () => {
+  alert("会場のFunパネル、フォトゾーン、あのときは助かったよ展をもう一度見てみよう！");
+});
+
+function updateProgress() {
+  const count = Object.keys(selectedAnswers).length;
+  answeredCount.textContent = count;
+  progressFill.style.width = `${count / 3 * 100}%`;
+  submitBtn.disabled = count !== 3;
+}
+
+submitBtn.addEventListener("click", () => {
+  const isCorrect = Object.keys(answers).every(q => selectedAnswers[q] === answers[q]);
+
+  quiz.style.display = "none";
+  result.style.display = "block";
+
+  if (isCorrect) {
+    document.getElementById("success-content").classList.remove("hidden");
+    triggerCelebration();
+  } else {
+    document.getElementById("failure-content").classList.remove("hidden");
+  }
+
+  window.scrollTo({ top: 0, behavior: "smooth" });
+});
+
+function retry() {
+  selectedAnswers = {};
+
+  document.querySelectorAll(".option").forEach(option => {
+    option.classList.remove("selected");
+    option.querySelector("input").checked = false;
+  });
+
+  document.getElementById("success-content").classList.add("hidden");
+  document.getElementById("failure-content").classList.add("hidden");
+  document.getElementById("confetti-container").innerHTML = "";
+
+  document.querySelectorAll(".cracker").forEach(c => {
+    c.classList.remove("animate");
+  });
+
+  document.getElementById("impact").classList.remove("active");
+
+  result.style.display = "none";
+  quiz.style.display = "block";
+
+  updateProgress();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function triggerCelebration() {
+  const crackers = document.querySelectorAll(".cracker");
+  const impact = document.getElementById("impact");
+
+  crackers.forEach(c => {
+    c.classList.remove("animate");
+    void c.offsetWidth;
+    c.classList.add("animate");
+  });
+
+  impact.classList.remove("active");
+  void impact.offsetWidth;
+  impact.classList.add("active");
+
+  createConfetti(120);
+
+  setTimeout(() => {
+    impact.classList.remove("active");
+    void impact.offsetWidth;
+    impact.classList.add("active");
+    createConfetti(80);
+  }, 520);
+}
+
+function createConfetti(count) {
+  const container = document.getElementById("confetti-container");
+  const colors = ["#ff3b6b", "#1d5cff", "#ffcf24", "#35c96f", "#9b5cff", "#00bcd4"];
+
+  for (let i = 0; i < count; i++) {
+    const piece = document.createElement("div");
+    piece.className = "confetti";
+
+    const fromLeft = Math.random() < 0.5;
+    const startX = fromLeft ? 18 : 82;
+    const startY = 75;
+
+    const xDirection = fromLeft ? 1 : -1;
+    const x = xDirection * (80 + Math.random() * 260);
+    const y = -180 - Math.random() * 260;
+    const size = 6 + Math.random() * 10;
+
+    piece.style.left = `${startX}%`;
+    piece.style.top = `${startY}%`;
+    piece.style.width = `${size}px`;
+    piece.style.height = `${size * (0.55 + Math.random() * 0.8)}px`;
+    piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+    piece.style.setProperty("--x", `${x}px`);
+    piece.style.setProperty("--y", `${y}px`);
+    piece.style.setProperty("--r", `${Math.random() * 720}deg`);
+    piece.style.setProperty("--duration", `${2.2 + Math.random() * 1.3}s`);
+    piece.style.animationDelay = `${Math.random() * 0.25}s`;
+
+    if (Math.random() > 0.65) {
+      piece.style.borderRadius = "50%";
+    }
+
+    container.appendChild(piece);
+
+    requestAnimationFrame(() => {
+      piece.classList.add("animate");
+    });
+
+    setTimeout(() => {
+      piece.remove();
+    }, 4200);
+  }
+}
+</script>
+</body>
+</html>
