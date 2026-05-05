@@ -612,18 +612,17 @@ function showWrongQuestions(wrongQuestions) {
 }
 
 function notifyServerOfCompletion() {
-  const webhookUrl = 'https://script.google.com/a/macros/st.inc/s/AKfycbz3LUNweCsn1Aw2z7l8cQlpi69vjInbU5VO2ZE5uOd3HURO8hCe5bfoSKb0WXU_mQ0DNg/exec';
+  const webhookUrl = 'https://script.google.com/macros/s/AKfycbz3LUNweCsn1Aw2z7l8cQlpi69vjInbU5VO2ZE5uOd3HURO8hCe5bfoSKb0WXU_mQ0DNg/exec';
+
   fetch(webhookUrl, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    mode: 'no-cors',
     body: JSON.stringify({
       mission: 'version3',
       result: 'success',
       timestamp: new Date().toISOString()
     })
-  }).catch(() => {
-    // 通知失敗でもユーザー体験を壊さない
-  });
+  }).catch(() => {});
 }
 
 function triggerCelebration() {
