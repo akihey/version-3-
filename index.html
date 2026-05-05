@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8" />　
+<meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>VERSION by STORES #3 ミッションクイズ</title>
 
@@ -250,6 +250,29 @@ body {
   z-index: 5;
 }
 
+.mission-stats {
+  margin-top: 14px;
+  color: #1d5cff;
+  font-weight: 700;
+}
+
+.failure-note {
+  margin-top: 10px;
+  color: #d42d2d;
+  font-weight: 700;
+}
+
+.wrong-questions {
+  margin: 16px 0 0 0;
+  padding-left: 18px;
+  text-align: left;
+  color: #1f3e72;
+}
+
+.wrong-questions li {
+  margin-bottom: 8px;
+}
+
 .hidden {
   display: none;
 }
@@ -471,15 +494,15 @@ body {
         スタッフにこの画面を見せて、<br>
         ガチャにチャレンジしてね♪
       </p>
-      <button class="retry-btn" onclick="retry()">もう一度チャレンジする</button>
     </div>
 
     <div id="failure-content" class="hidden failure-content">
       <h2 class="failure">あと少し！</h2>
-      <p>
+      <p id="failure-note">
         どこかの答えが違うみたいです。<br>
         会場をもう一度チェックしてみてね！
       </p>
+      <ul id="wrong-questions" class="wrong-questions"></ul>
       <button class="retry-btn" onclick="retry()">もう一度チャレンジする</button>
     </div>
   </div>
@@ -531,16 +554,21 @@ function updateProgress() {
 }
 
 submitBtn.addEventListener("click", () => {
-  const isCorrect = Object.keys(answers).every(q => selectedAnswers[q] === answers[q]);
+  const wrongQuestions = Object.keys(answers).filter(q => selectedAnswers[q] !== answers[q]);
+  const isCorrect = wrongQuestions.length === 0;
 
   quiz.style.display = "none";
   result.style.display = "block";
 
   if (isCorrect) {
     document.getElementById("success-content").classList.remove("hidden");
+    document.getElementById("failure-content").classList.add("hidden");
     triggerCelebration();
+    notifyServerOfCompletion();
   } else {
+    document.getElementById("success-content").classList.add("hidden");
     document.getElementById("failure-content").classList.remove("hidden");
+    showWrongQuestions(wrongQuestions);
   }
 
   window.scrollTo({ top: 0, behavior: "smooth" });
@@ -557,6 +585,8 @@ function retry() {
   document.getElementById("success-content").classList.add("hidden");
   document.getElementById("failure-content").classList.add("hidden");
   document.getElementById("confetti-container").innerHTML = "";
+  document.getElementById("wrong-questions").innerHTML = "";
+  document.getElementById("failure-note").textContent = "どこかの答えが違うみたいです。会場をもう一度チェックしてみてね！";
 
   document.querySelectorAll(".cracker").forEach(c => {
     c.classList.remove("animate");
@@ -569,6 +599,31 @@ function retry() {
 
   updateProgress();
   window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function showWrongQuestions(wrongQuestions) {
+  const wrongList = document.getElementById("wrong-questions");
+  wrongList.innerHTML = "";
+  wrongQuestions.forEach(q => {
+    const li = document.createElement("li");
+    li.textContent = `問題${q} が間違っています。`; 
+    wrongList.appendChild(li);
+  });
+}
+
+function notifyServerOfCompletion() {
+  const webhookUrl = 'https://script.google.com/a/macros/st.inc/s/AKfycbygOLvuDoWHiljUxvtPPJBqzmUfLE6r-QSor2XRPK3kZkSMyTqbOuD7O_7urjyrgewLLQ/exec';
+  fetch(webhookUrl, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      mission: 'version3',
+      result: 'success',
+      timestamp: new Date().toISOString()
+    })
+  }).catch(() => {
+    // 通知失敗でもユーザー体験を壊さない
+  });
 }
 
 function triggerCelebration() {
