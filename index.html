@@ -441,7 +441,7 @@ body {
 <div class="container quiz" id="quiz">
   <div class="name-panel">
   <label for="player-name">お名前を入力してください</label>
-  <input id="player-name" type="text" placeholder="例：安部" />
+  <input id="player-name" type="text" placeholder="ニックネームでもOK" />
 </div>
   <div class="status-panel">
     <div class="status-row">
@@ -626,10 +626,9 @@ function showWrongQuestions(wrongQuestions) {
 }
 
 function notifyServerOfCompletion() {
-  function notifyServerOfCompletion() {
   const playerName = playerNameInput.value.trim();
   const displayName = playerName ? `${playerName}さん` : "👏👏👏";
-    
+
   const slackWebhookUrl =
     'https://hooks.slack.com/services/' +
     'TANV7JYP8/' +
