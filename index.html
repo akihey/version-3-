@@ -102,6 +102,7 @@ body {
   padding: 24px;
   box-shadow: 0 18px 44px rgba(72,84,104,.12);
 }
+
 .name-panel {
   margin-bottom: 20px;
   padding: 18px;
@@ -128,6 +129,7 @@ body {
   font-size: 1rem;
   outline: none;
 }
+
 .status-panel {
   margin-bottom: 20px;
 }
@@ -262,9 +264,9 @@ body {
 .result-card {
   position: relative;
   overflow: hidden;
-  min-height: 460px;
+  min-height: 520px;
   border-radius: 30px;
-  padding: 44px 24px 28px;
+  padding: 44px 24px 34px;
   background: #fff;
   box-shadow: 0 22px 52px rgba(36,74,147,.14);
 }
@@ -275,10 +277,26 @@ body {
   z-index: 5;
 }
 
-.mission-stats {
-  margin-top: 14px;
-  color: #1d5cff;
-  font-weight: 700;
+.success-content {
+  isolation: isolate;
+}
+
+.success-content::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at center,
+      rgba(255,255,255,.72) 0%,
+      rgba(255,255,255,.18) 45%,
+      transparent 75%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.success-content > * {
+  position: relative;
+  z-index: 2;
 }
 
 .failure-note {
@@ -310,15 +328,18 @@ body {
 
 @keyframes crown-pop {
   0% { transform: translateY(20px) scale(0); opacity: 0; }
-  70% { transform: translateY(-8px) scale(1.2); opacity: 1; }
+  70% { transform: translateY(-8px) scale(1.15); opacity: 1; }
   100% { transform: translateY(0) scale(1); }
 }
 
 .success {
   color: #ff3b6b;
   font-size: 2rem;
+  line-height: 1.45;
   margin: 0;
   letter-spacing: -.04em;
+  word-break: keep-all;
+  line-break: strict;
 }
 
 .failure {
@@ -338,49 +359,31 @@ body {
   border: 2px solid #1d5cff;
 }
 
-/* 👇ここ追加 */
-.success-content {
-  isolation: isolate;
-}
-
-.success-content::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(circle at center,
-      rgba(255,255,255,.72) 0%,
-      rgba(255,255,255,.18) 45%,
-      transparent 75%);
-  z-index: 0;
-  pointer-events: none;
-}
-
-/* 背景のうすい放射花火 */
+/* 背景の放射花火 */
 .celebration-burst {
   position: absolute;
-  width: 260px;
-  height: 260px;
+  width: 270px;
+  height: 270px;
   border-radius: 50%;
   opacity: 0;
   z-index: 1;
   pointer-events: none;
   background: conic-gradient(
     from 0deg,
-    rgba(255, 91, 138, .16),
+    rgba(255, 91, 138, .28),
     transparent 7%,
-    rgba(255, 212, 90, .15),
+    rgba(255, 212, 90, .24),
     transparent 15%,
-    rgba(91, 168, 255, .16),
+    rgba(91, 168, 255, .26),
     transparent 24%,
-    rgba(155, 92, 255, .13),
+    rgba(155, 92, 255, .22),
     transparent 34%,
-    rgba(53, 201, 111, .12),
+    rgba(53, 201, 111, .20),
     transparent 46%,
-    rgba(255, 91, 138, .12),
+    rgba(255, 91, 138, .18),
     transparent 58%
   );
-  filter: blur(1.5px);
+  filter: blur(.5px);
 }
 
 .celebration-burst.left {
@@ -394,7 +397,7 @@ body {
 }
 
 .celebration-burst.animate {
-  animation: soft-burst 1.4s ease-out forwards;
+  animation: soft-burst 1.45s ease-out forwards;
 }
 
 @keyframes soft-burst {
@@ -403,59 +406,12 @@ body {
     transform: scale(.35) rotate(-10deg);
   }
   30% {
-    opacity: .85;
+    opacity: .92;
   }
   100% {
-    opacity: .32;
+    opacity: .45;
     transform: scale(1.15) rotate(8deg);
   }
-}
-
-/* 紙吹雪は少なめ・ふわっと */
-.confetti {
-  opacity: 0;
-  border-radius: 999px;
-}
-
-@media (max-width: 480px) {
-  .celebration-burst {
-    width: 210px;
-    height: 210px;
-  }
-
-  .celebration-burst.left {
-    left: -55px;
-    top: 135px;
-  }
-
-  .celebration-burst.right {
-    right: -55px;
-    top: 105px;
-  }
-}
-  
-/* 衝撃波 */
-.impact {
-  position: absolute;
-  left: 50%;
-  top: 48%;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: rgba(255,255,255,.9);
-  transform: translate(-50%, -50%) scale(0);
-  opacity: 0;
-  z-index: 3;
-}
-
-.impact.active {
-  animation: impact-boom .55s ease-out forwards;
-}
-
-@keyframes impact-boom {
-  0% { opacity: 1; transform: translate(-50%, -50%) scale(0); }
-  45% { opacity: .9; transform: translate(-50%, -50%) scale(8); }
-  100% { opacity: 0; transform: translate(-50%, -50%) scale(18); }
 }
 
 /* 紙吹雪 */
@@ -472,7 +428,7 @@ body {
   top: 62%;
   left: 50%;
   opacity: 0;
-  border-radius: 3px;
+  border-radius: 999px;
   transform-origin: center;
 }
 
@@ -485,21 +441,48 @@ body {
     opacity: 0;
     transform: translate(0,0) rotate(0deg) scale(.4);
   }
-  10% {
-    opacity: 1;
-    transform: translate(calc(var(--x) * .55), calc(var(--y) * .65)) rotate(var(--r)) scale(1.2);
+  14% {
+    opacity: .85;
+    transform: translate(calc(var(--x) * .55), calc(var(--y) * .65)) rotate(var(--r)) scale(1);
   }
-  32% {
-    opacity: 1;
-    transform: translate(var(--x), var(--y)) rotate(calc(var(--r) + 180deg)) scale(1);
-  }
-  70% {
-    opacity: 1;
-    transform: translate(calc(var(--x) * 1.25), calc(var(--y) + 220px)) rotate(calc(var(--r) + 420deg)) scale(.95);
+  38% {
+    opacity: .8;
+    transform: translate(var(--x), var(--y)) rotate(calc(var(--r) + 180deg)) scale(.95);
   }
   100% {
     opacity: 0;
-    transform: translate(calc(var(--x) * 1.35), 620px) rotate(calc(var(--r) + 720deg)) scale(.75);
+    transform: translate(calc(var(--x) * 1.2), 520px) rotate(calc(var(--r) + 520deg)) scale(.7);
+  }
+}
+
+@media (max-width: 480px) {
+  .result-card {
+    min-height: 520px;
+    padding: 44px 20px 36px;
+  }
+
+  .success {
+    font-size: 1.75rem;
+  }
+
+  .result p {
+    margin-top: 22px;
+    font-size: 0.95rem;
+  }
+
+  .celebration-burst {
+    width: 220px;
+    height: 220px;
+  }
+
+  .celebration-burst.left {
+    left: -58px;
+    top: 135px;
+  }
+
+  .celebration-burst.right {
+    right: -58px;
+    top: 105px;
   }
 }
 </style>
@@ -518,16 +501,14 @@ body {
 </div>
 
 <div class="container quiz" id="quiz">
-<div class="name-panel">
-  <label for="player-name">👤 お名前を入力してからスタート！</label>
+  <div class="name-panel">
+    <label for="player-name">👤 お名前を入力してからスタート！</label>
+    <p style="font-size:0.85rem; color:#5a6a8f; margin-bottom:8px;">
+      ※入力するとクリア画面に名前が表示されます
+    </p>
+    <input id="player-name" type="text" placeholder="ニックネームでもOK" />
+  </div>
 
-  <p style="font-size:0.85rem; color:#5a6a8f; margin-bottom:8px;">
-    ※入力するとクリア画面に名前が表示されます
-  </p>
-
-  <input id="player-name" type="text" placeholder="ニックネームでもOK" />
-</div>
-  
   <div class="status-panel">
     <div class="status-row">
       <div class="status-text">全3問中 <strong id="answered-count">0</strong>問回答済み</div>
@@ -570,16 +551,14 @@ body {
 
 <div class="container result" id="result">
   <div class="result-card">
-    <div class="impact" id="impact"></div>
     <div class="confetti-container" id="confetti-container"></div>
 
     <div id="success-content" class="hidden success-content">
-<div class="celebration-burst left"></div>
-<div class="celebration-burst right"></div>
+      <div class="celebration-burst left"></div>
+      <div class="celebration-burst right"></div>
+      <div class="crown">🎉</div>
 
-<div class="crown">🎉</div>
-      
-<h2 class="success" id="success-title">ミッションクリア！</h2>
+      <h2 class="success" id="success-title">ミッションクリア！</h2>
       <p>
         全問正解おめでとうございます！<br>
         スタッフにこの画面を見せて、<br>
@@ -655,13 +634,11 @@ submitBtn.addEventListener("click", () => {
   result.style.display = "block";
 
   if (isCorrect) {
-    // 👇 ここから追加
     const playerName = playerNameInput.value.trim();
     const displayName = playerName ? `${playerName}さん` : "👏👏👏";
 
     document.getElementById("success-title").textContent =
       `${displayName} ミッションクリア！`;
-    // 👆 ここまで追加
 
     document.getElementById("success-content").classList.remove("hidden");
     document.getElementById("failure-content").classList.add("hidden");
@@ -692,10 +669,8 @@ function retry() {
   document.getElementById("failure-note").textContent = "どこかの答えが違うみたいです。会場をもう一度チェックしてみてね！";
 
   document.querySelectorAll(".celebration-burst").forEach(b => {
-  b.classList.remove("animate");
-});
-
-  document.getElementById("impact").classList.remove("active");
+    b.classList.remove("animate");
+  });
 
   result.style.display = "none";
   quiz.style.display = "block";
@@ -709,7 +684,7 @@ function showWrongQuestions(wrongQuestions) {
   wrongList.innerHTML = "";
   wrongQuestions.forEach(q => {
     const li = document.createElement("li");
-    li.textContent = `問題${q} が間違っています。`; 
+    li.textContent = `問題${q} が間違っています。`;
     wrongList.appendChild(li);
   });
 }
@@ -737,25 +712,17 @@ function notifyServerOfCompletion() {
 }
 
 function triggerCelebration() {
-const bursts = document.querySelectorAll(".celebration-burst");
-const impact = document.getElementById("impact");
+  const bursts = document.querySelectorAll(".celebration-burst");
 
-bursts.forEach(b => {
-  b.classList.remove("animate");
-  void b.offsetWidth;
-  b.classList.add("animate");
-});
-
-  impact.classList.remove("active");
-  void impact.offsetWidth;
-  impact.classList.add("active");
+  bursts.forEach(b => {
+    b.classList.remove("animate");
+    void b.offsetWidth;
+    b.classList.add("animate");
+  });
 
   createConfetti(45);
 
   setTimeout(() => {
-    impact.classList.remove("active");
-    void impact.offsetWidth;
-    impact.classList.add("active");
     createConfetti(25);
   }, 520);
 }
@@ -775,7 +742,7 @@ function createConfetti(count) {
     const xDirection = fromLeft ? 1 : -1;
     const x = xDirection * (80 + Math.random() * 260);
     const y = -180 - Math.random() * 260;
-    const size = 6 + Math.random() * 10;
+    const size = 5 + Math.random() * 8;
 
     piece.style.left = `${startX}%`;
     piece.style.top = `${startY}%`;
@@ -785,7 +752,7 @@ function createConfetti(count) {
     piece.style.setProperty("--x", `${x}px`);
     piece.style.setProperty("--y", `${y}px`);
     piece.style.setProperty("--r", `${Math.random() * 720}deg`);
-    piece.style.setProperty("--duration", `${2.2 + Math.random() * 1.3}s`);
+    piece.style.setProperty("--duration", `${2.4 + Math.random() * 1.4}s`);
     piece.style.animationDelay = `${Math.random() * 0.25}s`;
 
     if (Math.random() > 0.65) {
