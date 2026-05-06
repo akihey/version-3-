@@ -644,7 +644,6 @@ submitBtn.addEventListener("click", () => {
     document.getElementById("failure-content").classList.add("hidden");
 
     triggerCelebration();
-    notifyServerOfCompletion();
   } else {
     document.getElementById("success-content").classList.add("hidden");
     document.getElementById("failure-content").classList.remove("hidden");
@@ -689,27 +688,6 @@ function showWrongQuestions(wrongQuestions) {
   });
 }
 
-function notifyServerOfCompletion() {
-  const playerName = playerNameInput.value.trim();
-  const displayName = playerName ? `${playerName}さん` : "👏👏👏";
-
-  const slackWebhookUrl =
-    'https://hooks.slack.com/services/' +
-    'TANV7JYP8/' +
-    'B0B1EU65T71/' +
-    'P8dIqeJeXNtFSrcs6lHQw5BN';
-
-  fetch(slackWebhookUrl, {
-    method: 'POST',
-    mode: 'no-cors',
-    body: JSON.stringify({
-      text:
-        `🎉 ミッションクイズがクリアされました！\n` +
-        `👤 ${displayName}\n` +
-        `🕒 ${new Date().toLocaleString('ja-JP')}`
-    })
-  }).catch(() => {});
-}
 
 function triggerCelebration() {
   const bursts = document.querySelectorAll(".celebration-burst");
