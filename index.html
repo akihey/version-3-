@@ -612,15 +612,13 @@ function showWrongQuestions(wrongQuestions) {
 }
 
 function notifyServerOfCompletion() {
-  const webhookUrl = 'https://script.google.com/macros/s/AKfycbz3LUNweCsn1Aw2z7l8cQlpi69vjInbU5VO2ZE5uOd3HURO8hCe5bfoSKb0WXU_mQ0DNg/exec';
+  const slackWebhookUrl = 'https://hooks.slack.com/services/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';
 
-  fetch(webhookUrl, {
+  fetch(slackWebhookUrl, {
     method: 'POST',
     mode: 'no-cors',
     body: JSON.stringify({
-      mission: 'version3',
-      result: 'success',
-      timestamp: new Date().toISOString()
+      text: `🎉 VERSION #3 ミッションクイズがクリアされました！\n時刻：${new Date().toLocaleString('ja-JP')}`
     })
   }).catch(() => {});
 }
