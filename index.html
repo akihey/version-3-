@@ -338,89 +338,102 @@ body {
   border: 2px solid #1d5cff;
 }
 
-/* クラッカー本体 */
-.party-popper {
-  position: absolute;
-  bottom: 28px;
-  width: 90px;
-  height: 90px;
-  z-index: 1;
+/* 👇ここ追加 */
+.success-content {
+  isolation: isolate;
 }
 
-.party-popper.left {
-  left: 12px;
-  transform: rotate(-20deg);
-}
-
-.party-popper.right {
-  right: 12px;
-  transform: rotate(20deg) scaleX(-1);
-}
-
-/* 本体 */
-.party-popper::before {
+.success-content::before {
   content: "";
   position: absolute;
-  bottom: 0;
-  left: 18px;
-  width: 54px;
-  height: 70px;
-  border-radius: 0 0 30px 30px;
-  background: linear-gradient(
-    135deg,
-    #ff5b8a 0%,
-    #ff5b8a 25%,
-    #ffd45a 25%,
-    #ffd45a 50%,
-    #5ba8ff 50%,
-    #5ba8ff 75%,
-    #ff5b8a 75%
-  );
-  clip-path: polygon(0 0, 100% 0, 70% 100%, 30% 100%);
-  box-shadow: 0 10px 24px rgba(0,0,0,.12);
-}
-
-/* 放射エフェクト */
-.burst {
-  position: absolute;
-  left: 50%;
-  bottom: 60px;
-  width: 220px;
-  height: 220px;
-  transform: translateX(-50%) scale(0.3);
-  opacity: 0;
-  border-radius: 50%;
+  inset: 0;
   background:
-    conic-gradient(
-      from 0deg,
-      rgba(255,91,138,.18),
-      rgba(255,212,90,.18),
-      rgba(91,168,255,.18),
-      rgba(255,91,138,.18)
-    );
-  filter: blur(2px);
+    radial-gradient(circle at center,
+      rgba(255,255,255,.72) 0%,
+      rgba(255,255,255,.18) 45%,
+      transparent 75%);
+  z-index: 0;
+  pointer-events: none;
 }
 
-.burst.animate {
-  animation: burst-pop 1s ease-out forwards;
+/* 背景のうすい放射花火 */
+.celebration-burst {
+  position: absolute;
+  width: 260px;
+  height: 260px;
+  border-radius: 50%;
+  opacity: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: conic-gradient(
+    from 0deg,
+    rgba(255, 91, 138, .16),
+    transparent 7%,
+    rgba(255, 212, 90, .15),
+    transparent 15%,
+    rgba(91, 168, 255, .16),
+    transparent 24%,
+    rgba(155, 92, 255, .13),
+    transparent 34%,
+    rgba(53, 201, 111, .12),
+    transparent 46%,
+    rgba(255, 91, 138, .12),
+    transparent 58%
+  );
+  filter: blur(1.5px);
 }
 
-@keyframes burst-pop {
+.celebration-burst.left {
+  left: -45px;
+  top: 145px;
+}
+
+.celebration-burst.right {
+  right: -45px;
+  top: 105px;
+}
+
+.celebration-burst.animate {
+  animation: soft-burst 1.4s ease-out forwards;
+}
+
+@keyframes soft-burst {
   0% {
-    transform: translateX(-50%) scale(0.2);
     opacity: 0;
+    transform: scale(.35) rotate(-10deg);
   }
-
   30% {
-    opacity: 1;
+    opacity: .85;
   }
-
   100% {
-    transform: translateX(-50%) scale(1);
-    opacity: 0;
+    opacity: .32;
+    transform: scale(1.15) rotate(8deg);
   }
 }
 
+/* 紙吹雪は少なめ・ふわっと */
+.confetti {
+  opacity: 0;
+  border-radius: 999px;
+}
+
+@media (max-width: 480px) {
+  .celebration-burst {
+    width: 210px;
+    height: 210px;
+  }
+
+  .celebration-burst.left {
+    left: -55px;
+    top: 135px;
+  }
+
+  .celebration-burst.right {
+    right: -55px;
+    top: 105px;
+  }
+}
+  
 /* 衝撃波 */
 .impact {
   position: absolute;
@@ -561,14 +574,11 @@ body {
     <div class="confetti-container" id="confetti-container"></div>
 
     <div id="success-content" class="hidden success-content">
-<div class="party-popper left">
-  <div class="burst"></div>
-</div>
+<div class="celebration-burst left"></div>
+<div class="celebration-burst right"></div>
 
-<div class="party-popper right">
-  <div class="burst"></div>
-</div>
-      <div class="crown">👑</div>
+<div class="crown">🎉</div>
+      
 <h2 class="success" id="success-title">ミッションクリア！</h2>
       <p>
         全問正解おめでとうございます！<br>
@@ -681,7 +691,7 @@ function retry() {
   document.getElementById("wrong-questions").innerHTML = "";
   document.getElementById("failure-note").textContent = "どこかの答えが違うみたいです。会場をもう一度チェックしてみてね！";
 
-  document.querySelectorAll(".burst").forEach(b => {
+  document.querySelectorAll(".celebration-burst").forEach(b => {
   b.classList.remove("animate");
 });
 
@@ -727,7 +737,7 @@ function notifyServerOfCompletion() {
 }
 
 function triggerCelebration() {
-const bursts = document.querySelectorAll(".burst");
+const bursts = document.querySelectorAll(".celebration-burst");
 const impact = document.getElementById("impact");
 
 bursts.forEach(b => {
@@ -740,13 +750,13 @@ bursts.forEach(b => {
   void impact.offsetWidth;
   impact.classList.add("active");
 
-  createConfetti(120);
+  createConfetti(45);
 
   setTimeout(() => {
     impact.classList.remove("active");
     void impact.offsetWidth;
     impact.classList.add("active");
-    createConfetti(80);
+    createConfetti(25);
   }, 520);
 }
 
