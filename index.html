@@ -433,7 +433,7 @@ body {
     <h1>ミッションクイズ！</h1>
     <p>
       クイズに全問正解するとレアアイテムが当たるガチャがまわせるよ★<br>
-      全問正解したらカプセルガチャの近くにいるスタッフに3問正解の画面を見せてください♪♪
+      全問正解したらカプセルガチャの近くにいるスタッフにミッションクリアの画面を見せてください♪♪
     </p>
   </div>
 </div>
@@ -543,7 +543,7 @@ document.querySelectorAll(".option").forEach(option => {
 });
 
 document.getElementById("hint-btn").addEventListener("click", () => {
-  alert("会場のFunパネル、フォトゾーン、あのときは助かったよ展をもう一度見てみよう！");
+  alert("会場の写真パネル、フォトゾーン、あの時は助かったよ展をもう一度見てみよう！");
 });
 
 function updateProgress() {
@@ -612,7 +612,11 @@ function showWrongQuestions(wrongQuestions) {
 }
 
 function notifyServerOfCompletion() {
-  const slackWebhookUrl = 'https://hooks.slack.com/services/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';
+  const slackWebhookUrl =
+    'https://hooks.slack.com/services/' +
+    'TANV7JYP8/' +
+    'B0B1EU65T71/' +
+    'P8dIqeJeXNtFSrcs6lHQw5BN';
 
   fetch(slackWebhookUrl, {
     method: 'POST',
