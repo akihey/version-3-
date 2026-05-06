@@ -102,7 +102,32 @@ body {
   padding: 24px;
   box-shadow: 0 18px 44px rgba(72,84,104,.12);
 }
+.name-panel {
+  margin-bottom: 20px;
+  padding: 18px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #eef5ff, #f5f9ff);
+  border: 2px solid #1d5cff;
+  box-shadow: 0 10px 24px rgba(29,92,255,.12);
+}
 
+.name-panel label {
+  display: block;
+  font-weight: 900;
+  margin-bottom: 10px;
+  font-size: 1rem;
+  color: #1d5cff;
+}
+
+.name-panel input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 2px solid #1d5cff;
+  font-size: 1rem;
+  outline: none;
+}
 .status-panel {
   margin-bottom: 20px;
 }
@@ -313,46 +338,87 @@ body {
   border: 2px solid #1d5cff;
 }
 
-/* クラッカー */
-.cracker {
+/* クラッカー本体 */
+.party-popper {
   position: absolute;
-  bottom: 36px;
-  font-size: 4.2rem;
+  bottom: 28px;
+  width: 90px;
+  height: 90px;
+  z-index: 1;
+}
+
+.party-popper.left {
+  left: 12px;
+  transform: rotate(-20deg);
+}
+
+.party-popper.right {
+  right: 12px;
+  transform: rotate(20deg) scaleX(-1);
+}
+
+/* 本体 */
+.party-popper::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 18px;
+  width: 54px;
+  height: 70px;
+  border-radius: 0 0 30px 30px;
+  background: linear-gradient(
+    135deg,
+    #ff5b8a 0%,
+    #ff5b8a 25%,
+    #ffd45a 25%,
+    #ffd45a 50%,
+    #5ba8ff 50%,
+    #5ba8ff 75%,
+    #ff5b8a 75%
+  );
+  clip-path: polygon(0 0, 100% 0, 70% 100%, 30% 100%);
+  box-shadow: 0 10px 24px rgba(0,0,0,.12);
+}
+
+/* 放射エフェクト */
+.burst {
+  position: absolute;
+  left: 50%;
+  bottom: 60px;
+  width: 220px;
+  height: 220px;
+  transform: translateX(-50%) scale(0.3);
   opacity: 0;
-  z-index: 4;
-  pointer-events: none;
+  border-radius: 50%;
+  background:
+    conic-gradient(
+      from 0deg,
+      rgba(255,91,138,.18),
+      rgba(255,212,90,.18),
+      rgba(91,168,255,.18),
+      rgba(255,91,138,.18)
+    );
+  filter: blur(2px);
 }
 
-.cracker.left {
-  left: -90px;
-  transform: rotate(-28deg);
+.burst.animate {
+  animation: burst-pop 1s ease-out forwards;
 }
 
-.cracker.right {
-  right: -90px;
-  transform: rotate(28deg) scaleX(-1);
-}
+@keyframes burst-pop {
+  0% {
+    transform: translateX(-50%) scale(0.2);
+    opacity: 0;
+  }
 
-.cracker.left.animate {
-  animation: cracker-left .75s cubic-bezier(.16,1.35,.35,1) forwards;
-}
+  30% {
+    opacity: 1;
+  }
 
-.cracker.right.animate {
-  animation: cracker-right .75s cubic-bezier(.16,1.35,.35,1) forwards;
-}
-
-@keyframes cracker-left {
-  0% { opacity: 0; transform: translateX(0) rotate(-45deg) scale(.3); }
-  55% { opacity: 1; transform: translateX(82px) rotate(-22deg) scale(1.28); }
-  75% { transform: translateX(70px) rotate(-30deg) scale(.96); }
-  100% { opacity: 1; transform: translateX(76px) rotate(-28deg) scale(1); }
-}
-
-@keyframes cracker-right {
-  0% { opacity: 0; transform: translateX(0) rotate(45deg) scaleX(-1) scale(.3); }
-  55% { opacity: 1; transform: translateX(-82px) rotate(22deg) scaleX(-1) scale(1.28); }
-  75% { transform: translateX(-70px) rotate(30deg) scaleX(-1) scale(.96); }
-  100% { opacity: 1; transform: translateX(-76px) rotate(28deg) scaleX(-1) scale(1); }
+  100% {
+    transform: translateX(-50%) scale(1);
+    opacity: 0;
+  }
 }
 
 /* 衝撃波 */
@@ -439,10 +505,16 @@ body {
 </div>
 
 <div class="container quiz" id="quiz">
-  <div class="name-panel">
-  <label for="player-name">お名前を入力してください</label>
+<div class="name-panel">
+  <label for="player-name">👤 お名前を入力してからスタート！</label>
+
+  <p style="font-size:0.85rem; color:#5a6a8f; margin-bottom:8px;">
+    ※入力するとクリア画面に名前が表示されます
+  </p>
+
   <input id="player-name" type="text" placeholder="ニックネームでもOK" />
 </div>
+  
   <div class="status-panel">
     <div class="status-row">
       <div class="status-text">全3問中 <strong id="answered-count">0</strong>問回答済み</div>
@@ -489,8 +561,13 @@ body {
     <div class="confetti-container" id="confetti-container"></div>
 
     <div id="success-content" class="hidden success-content">
-      <div class="cracker left">🎉</div>
-      <div class="cracker right">🎉</div>
+<div class="party-popper left">
+  <div class="burst"></div>
+</div>
+
+<div class="party-popper right">
+  <div class="burst"></div>
+</div>
       <div class="crown">👑</div>
 <h2 class="success" id="success-title">ミッションクリア！</h2>
       <p>
@@ -527,6 +604,8 @@ const playerNameInput = document.getElementById("player-name");
 const submitBtn = document.getElementById("submit-btn");
 const answeredCount = document.getElementById("answered-count");
 const progressFill = document.getElementById("progress-fill");
+
+playerNameInput.addEventListener("input", updateProgress);
 
 document.querySelectorAll(".option").forEach(option => {
   option.addEventListener("click", () => {
@@ -602,9 +681,9 @@ function retry() {
   document.getElementById("wrong-questions").innerHTML = "";
   document.getElementById("failure-note").textContent = "どこかの答えが違うみたいです。会場をもう一度チェックしてみてね！";
 
-  document.querySelectorAll(".cracker").forEach(c => {
-    c.classList.remove("animate");
-  });
+  document.querySelectorAll(".burst").forEach(b => {
+  b.classList.remove("animate");
+});
 
   document.getElementById("impact").classList.remove("active");
 
@@ -648,14 +727,14 @@ function notifyServerOfCompletion() {
 }
 
 function triggerCelebration() {
-  const crackers = document.querySelectorAll(".cracker");
-  const impact = document.getElementById("impact");
+const bursts = document.querySelectorAll(".burst");
+const impact = document.getElementById("impact");
 
-  crackers.forEach(c => {
-    c.classList.remove("animate");
-    void c.offsetWidth;
-    c.classList.add("animate");
-  });
+bursts.forEach(b => {
+  b.classList.remove("animate");
+  void b.offsetWidth;
+  b.classList.add("animate");
+});
 
   impact.classList.remove("active");
   void impact.offsetWidth;
