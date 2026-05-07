@@ -12,9 +12,9 @@ body {
   padding: 24px 0 40px;
   color: #1e2b4f;
   background:
-    radial-gradient(circle at top left, rgba(13,110,253,.12), transparent 18%),
-    radial-gradient(circle at top right, rgba(244,67,54,.12), transparent 20%),
-    linear-gradient(180deg, #f8fbff 0%, #eef4ff 55%, #f7f8fb 100%);
+    radial-gradient(circle at top left, rgba(73,144,202,.16), transparent 18%),
+    radial-gradient(circle at top right, rgba(232,65,91,.14), transparent 20%),
+    linear-gradient(180deg, #dee0da 0%, #f5f6f2 56%, #ffffff 100%);
   min-height: 100vh;
 }
 
@@ -29,7 +29,7 @@ body {
 .header {
   padding: 22px;
   border-radius: 26px;
-  background: #051a40;
+  background: linear-gradient(135deg, #4990ca 0%, #3f7eb2 100%);
   color: #fff;
   box-shadow: 0 20px 42px rgba(15,30,70,.16);
   overflow: hidden;
@@ -47,13 +47,13 @@ body {
 }
 
 .header::before {
-  background: #3c6fff;
+  background: #4990ca;
   top: -50px;
   left: -50px;
 }
 
 .header::after {
-  background: #ff4f79;
+  background: #e8415b;
   right: -50px;
   bottom: -50px;
 }
@@ -81,7 +81,7 @@ body {
   justify-content: center;
   align-items: center;
   border-radius: 50%;
-  background: #ff4f79;
+  background: #e8415b;
 }
 
 .header h1 {
@@ -120,9 +120,9 @@ body {
 }
 
 .hint-btn {
-  border: 1px solid #dbe5ff;
-  background: #eef5ff;
-  color: #1d5cff;
+  border: 1px solid rgba(73,144,202,.3);
+  background: rgba(73,144,202,.1);
+  color: #2f6ca3;
   border-radius: 999px;
   padding: 10px 14px;
   font-weight: 800;
@@ -132,7 +132,7 @@ body {
 .progress-bar {
   height: 10px;
   border-radius: 999px;
-  background: #eef4ff;
+  background: #dee0da;
   overflow: hidden;
   margin-top: 10px;
 }
@@ -140,7 +140,7 @@ body {
 .progress-fill {
   width: 0%;
   height: 100%;
-  background: linear-gradient(90deg, #1d5cff, #4a86ff);
+  background: linear-gradient(90deg, #4990ca, #87b5d7);
   transition: width .25s ease;
 }
 
@@ -148,8 +148,8 @@ body {
   margin-bottom: 22px;
   padding: 18px;
   border-radius: 22px;
-  background: #fbfdff;
-  border: 1px solid rgba(42,79,198,.13);
+  background: #f5f6f2;
+  border: 1px solid rgba(73,144,202,.18);
 }
 
 .question h3 {
@@ -169,7 +169,7 @@ body {
   gap: 14px;
   padding: 14px 16px;
   border-radius: 18px;
-  border: 1px solid #d8e5ff;
+  border: 1px solid rgba(73,144,202,.18);
   background: #fff;
   cursor: pointer;
   transition: .2s ease;
@@ -179,19 +179,19 @@ body {
   content: "";
   width: 18px;
   height: 18px;
-  border: 2px solid #9dbdff;
+  border: 2px solid rgba(73,144,202,.5);
   border-radius: 50%;
   flex-shrink: 0;
 }
 
 .option.selected {
-  border-color: #1d5cff;
-  background: #ebf1ff;
-  box-shadow: 0 10px 22px rgba(29,92,255,.12);
+  border-color: #4990ca;
+  background: rgba(73,144,202,.14);
+  box-shadow: 0 10px 22px rgba(73,144,202,.12);
 }
 
 .option.selected::before {
-  background: #1d5cff;
+  background: #4990ca;
   box-shadow: inset 0 0 0 4px #fff;
 }
 
@@ -218,12 +218,12 @@ body {
 .submit-btn {
   color: #fff;
   border: none;
-  background: linear-gradient(135deg, #1d5cff, #3a79ff);
-  box-shadow: 0 14px 28px rgba(29,92,255,.22);
+  background: linear-gradient(135deg, #4990ca, #3a7ca8);
+  box-shadow: 0 14px 28px rgba(73,144,202,.22);
 }
 
 .submit-btn:disabled {
-  background: #cad6f3;
+  background: #b7c9d8;
   color: #7a86a7;
   box-shadow: none;
   cursor: not-allowed;
@@ -252,13 +252,13 @@ body {
 
 .mission-stats {
   margin-top: 14px;
-  color: #1d5cff;
+  color: #4990ca;
   font-weight: 700;
 }
 
 .failure-note {
   margin-top: 10px;
-  color: #d42d2d;
+  color: #e8415b;
   font-weight: 700;
 }
 
@@ -290,7 +290,7 @@ body {
 }
 
 .success {
-  color: #ff3b6b;
+  color: #e8415b;
   font-size: 2rem;
   margin: 0;
   letter-spacing: -.04em;
@@ -309,50 +309,8 @@ body {
 .retry-btn {
   margin-top: 24px;
   background: #fff;
-  color: #1d5cff;
-  border: 2px solid #1d5cff;
-}
-
-/* クラッカー */
-.cracker {
-  position: absolute;
-  bottom: 36px;
-  font-size: 4.2rem;
-  opacity: 0;
-  z-index: 4;
-  pointer-events: none;
-}
-
-.cracker.left {
-  left: -90px;
-  transform: rotate(-28deg);
-}
-
-.cracker.right {
-  right: -90px;
-  transform: rotate(28deg) scaleX(-1);
-}
-
-.cracker.left.animate {
-  animation: cracker-left .75s cubic-bezier(.16,1.35,.35,1) forwards;
-}
-
-.cracker.right.animate {
-  animation: cracker-right .75s cubic-bezier(.16,1.35,.35,1) forwards;
-}
-
-@keyframes cracker-left {
-  0% { opacity: 0; transform: translateX(0) rotate(-45deg) scale(.3); }
-  55% { opacity: 1; transform: translateX(82px) rotate(-22deg) scale(1.28); }
-  75% { transform: translateX(70px) rotate(-30deg) scale(.96); }
-  100% { opacity: 1; transform: translateX(76px) rotate(-28deg) scale(1); }
-}
-
-@keyframes cracker-right {
-  0% { opacity: 0; transform: translateX(0) rotate(45deg) scaleX(-1) scale(.3); }
-  55% { opacity: 1; transform: translateX(-82px) rotate(22deg) scaleX(-1) scale(1.28); }
-  75% { transform: translateX(-70px) rotate(30deg) scaleX(-1) scale(.96); }
-  100% { opacity: 1; transform: translateX(-76px) rotate(28deg) scaleX(-1) scale(1); }
+  color: #4990ca;
+  border: 2px solid #4990ca;
 }
 
 /* 衝撃波 */
@@ -386,6 +344,32 @@ body {
   overflow: hidden;
   pointer-events: none;
   z-index: 2;
+}
+
+.confetti-piece {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  font-size: 16px;
+  color: #e8415b;
+  pointer-events: none;
+  animation: confettiRise linear forwards;
+}
+
+@keyframes confettiRise {
+  0% {
+    transform: translateX(0) translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(var(--dx)) translateY(-110vh) rotate(var(--r));
+    opacity: 0.2;
+  }
 }
 
 .confetti {
@@ -476,18 +460,17 @@ body {
     </div>
   </div>
 
-  <button class="submit-btn" id="submit-btn" disabled>採点する</button>
+  <button class="submit-btn" id="submit-btn" disabled>回答を見る</button>
 </div>
 
 <div class="container result" id="result">
   <div class="result-card">
     <div class="impact" id="impact"></div>
     <div class="confetti-container" id="confetti-container"></div>
+    <div class="confetti-container" id="confetti"></div>
 
     <div id="success-content" class="hidden success-content">
-      <div class="cracker left">🎉</div>
-      <div class="cracker right">🎉</div>
-      <div class="crown">👑</div>
+      <div class="crown">🎉</div>
       <h2 class="success">ミッションクリア！</h2>
       <p>
         全問正解おめでとうございます！<br>
@@ -585,6 +568,8 @@ function retry() {
   document.getElementById("success-content").classList.add("hidden");
   document.getElementById("failure-content").classList.add("hidden");
   document.getElementById("confetti-container").innerHTML = "";
+  const confettiHeart = document.getElementById("confetti");
+  if (confettiHeart) confettiHeart.innerHTML = "";
   document.getElementById("wrong-questions").innerHTML = "";
   document.getElementById("failure-note").textContent = "どこかの答えが違うみたいです。会場をもう一度チェックしてみてね！";
 
@@ -640,57 +625,46 @@ function triggerCelebration() {
   void impact.offsetWidth;
   impact.classList.add("active");
 
-  createConfetti(120);
+  createConfetti(60);
 
   setTimeout(() => {
     impact.classList.remove("active");
     void impact.offsetWidth;
     impact.classList.add("active");
-    createConfetti(80);
+    createConfetti(35);
   }, 520);
 }
 
 function createConfetti(count) {
-  const container = document.getElementById("confetti-container");
-  const colors = ["#ff3b6b", "#1d5cff", "#ffcf24", "#35c96f", "#9b5cff", "#00bcd4"];
+  const container = document.getElementById("confetti") || document.getElementById("confetti-container");
 
   for (let i = 0; i < count; i++) {
     const piece = document.createElement("div");
-    piece.className = "confetti";
+    piece.className = "confetti-piece";
+    piece.textContent = "♡";
 
-    const fromLeft = Math.random() < 0.5;
-    const startX = fromLeft ? 18 : 82;
-    const startY = 75;
-
-    const xDirection = fromLeft ? 1 : -1;
-    const x = xDirection * (80 + Math.random() * 260);
-    const y = -180 - Math.random() * 260;
-    const size = 6 + Math.random() * 10;
+    const startX = Math.random() * 100;
+    const startY = 70 + Math.random() * 20;
+    const drift = (Math.random() - 0.5) * 120;
+    const duration = 1.8 + Math.random() * 1.1;
+    const rotation = `${Math.random() * 720}deg`;
+    const fontSize = 12 + Math.random() * 10;
+    const colors = ["#4990ca", "#e8415b", "#dee0da", "#ffffff"];
 
     piece.style.left = `${startX}%`;
     piece.style.top = `${startY}%`;
-    piece.style.width = `${size}px`;
-    piece.style.height = `${size * (0.55 + Math.random() * 0.8)}px`;
-    piece.style.background = colors[Math.floor(Math.random() * colors.length)];
-    piece.style.setProperty("--x", `${x}px`);
-    piece.style.setProperty("--y", `${y}px`);
-    piece.style.setProperty("--r", `${Math.random() * 720}deg`);
-    piece.style.setProperty("--duration", `${2.2 + Math.random() * 1.3}s`);
+    piece.style.fontSize = `${fontSize}px`;
+    piece.style.color = colors[Math.floor(Math.random() * colors.length)];
+    piece.style.setProperty("--dx", `${drift}px`);
+    piece.style.setProperty("--r", rotation);
+    piece.style.animationDuration = `${duration}s`;
     piece.style.animationDelay = `${Math.random() * 0.25}s`;
-
-    if (Math.random() > 0.65) {
-      piece.style.borderRadius = "50%";
-    }
 
     container.appendChild(piece);
 
-    requestAnimationFrame(() => {
-      piece.classList.add("animate");
-    });
-
     setTimeout(() => {
       piece.remove();
-    }, 4200);
+    }, duration * 1000 + 400);
   }
 }
 </script>
