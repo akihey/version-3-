@@ -1,174 +1,213 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>クラッカー（軽くパンッ版）</title>
+
+
+
+
+
+
+
+
+data-color-mode="auto" data-light-theme="light" data-dark-theme="dark"data-a11y-animated-images="system" data-a11y-link-underlines="true"
+
+
+
 <style>
-body {
-  margin: 0;
-  min-height: 100vh;
-  display: grid;
-  place-items: center;
-  font-family: sans-serif;
-  background: radial-gradient(circle at top, rgba(73,144,202,0.15), transparent 30%), linear-gradient(180deg,#f7fafc,#dee0da);
-}
 
-.stage {
-  position: relative;
-  width: 320px;
-  height: 500px;
-  background: #ffffff;
-  border-radius: 24px;
-  padding: 20px;
-  text-align: center;
-  box-shadow: 0 20px 40px rgba(73,144,202,0.16);
-  overflow: hidden;
-}
+ {--fontStack-monospace: "Monaspace Neon", ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace !important;}
 
-h1 {
-  font-size: 28px;
-  color: #e8415b;
-}
 
-button {
-  margin-top: 20px;
-  padding: 12px;
-  width: 100%;
-  border-radius: 10px;
-  border: none;
-  background: #4990ca;
-  color: #ffffff;
-  font-weight: bold;
-}
 
-.cracker {
-  position: absolute;
-  bottom: 22px;
-  font-size: 42px;
-  z-index: 2;
-}
 
-.left { left: 24px; transform: rotate(-20deg); }
-.right { right: 24px; transform: rotate(20deg); }
 
-.cracker.pop-left {
-  animation: popLeft .35s ease-out;
-}
+<link crossorigin="anonymous" media="all" rel="stylesheet" href="https://github.githubassets.com/assets/primer-primitives-7f694b60439d06c0.css" />
+<link crossorigin="anonymous" media="all" rel="stylesheet" href="https://github.githubassets.com/assets/primer-tailwind-compatible-25aee10cf9257254.css" />
+<link crossorigin="anonymous" media="all" rel="stylesheet" href="https://github.githubassets.com/assets/global-81a5f61ff87ac6f0.css" />
+<link crossorigin="anonymous" media="all" rel="stylesheet" href="https://github.githubassets.com/assets/github-f825c0edd7ad57f8.css" />
+<link crossorigin="anonymous" media="all" rel="stylesheet" href="https://github.githubassets.com/assets/tailwind-00bf83f0a2a87752.css" />
 
-.cracker.pop-right {
-  animation: popRight .35s ease-out;
-}
 
-@keyframes popLeft {
-  0% { transform: rotate(-20deg) scale(1); }
-  35% { transform: rotate(-28deg) scale(1.12) translate(-2px, 2px); }
-  100% { transform: rotate(-20deg) scale(1); }
-}
 
-@keyframes popRight {
-  0% { transform: rotate(20deg) scale(1); }
-  35% { transform: rotate(28deg) scale(1.12) translate(2px, 2px); }
-  100% { transform: rotate(20deg) scale(1); }
-}
 
-.confetti {
-  position: absolute;
-  width: 7px;
-  height: 7px;
-  border-radius: 2px;
-  opacity: 0;
-  z-index: 1;
-}
 
-.confetti.fly {
-  animation: softPop 1.35s ease-out forwards;
-}
 
-@keyframes softPop {
-  0% {
-    opacity: 0;
-    transform: translate(0,0) rotate(0deg) scale(.5);
-  }
-  12% {
-    opacity: 1;
-    transform: translate(calc(var(--x) * .45), calc(var(--y) * .45)) rotate(80deg) scale(1.05);
-  }
-  45% {
-    opacity: 1;
-    transform: translate(var(--x), var(--y)) rotate(var(--r)) scale(1);
-  }
-  100% {
-    opacity: 0;
-    transform: translate(calc(var(--x) * 1.08), calc(var(--y) + 90px)) rotate(calc(var(--r) + 180deg)) scale(.8);
-  }
-}
-</style>
-</head>
-<body>
 
-<div class="stage" id="stage">
-  <h1>ミッションクリア！</h1>
-  <button onclick="play()">もう一回</button>
 
-  <div class="cracker left" id="leftCracker">🎉</div>
-  <div class="cracker right" id="rightCracker">🎉</div>
+
+<meta name="google-site-verification" content="Apib7-x98H0j5cPqHWwSMm6dNU4GmODRoqxLiDzdx9I">
+
+
+
+
+
+
+
+
+
+
+
+<meta name="user-login" content="akihey">
+
+<meta name="viewport" content="width=device-width">
+
+
+
+  <meta name="description" content="GitHub is where people build software. More than 150 million people use GitHub to discover, fork, and contribute to over 420 million projects.">
+
+  <link rel="search" type="application/opensearchdescription+xml" href="/opensearch.xml" title="GitHub">
+
+<link rel="fluid-icon" href="https://github.com/fluidicon.png" title="GitHub">
+<meta property="fb:app_id" content="1401488693436528">
+<meta name="apple-itunes-app" content="app-id=1477376905, app-argument=https://github.com/akihey/version-3-/raw/refs/heads/main/index.html" />
+
+  <meta property="og:url" content="https://github.com">
+
+  <link rel="shared-web-socket" href="wss://alive.github.com/_sockets/u/52227066/ws?session=eyJ2IjoiVjMiLCJ1Ijo1MjIyNzA2NiwicyI6MjA3NTA1OTExMiwiYyI6MTQyOTg5ODI4MiwidCI6MTc3ODE0OTg2NH0=--512dbfae57fe08b2a1ed7dbcf8e4d244a9c36d062572ce008b55e0b49f203dc6" data-refresh-url="/_alive" data-session-id="161fd0463361bbf442f9d2f256a247527b2b6d1e626ba670be00d9d5d48f6cd6">
+  <link rel="shared-web-socket-src" href="/assets-cdn/worker/socket-worker-340fe105306ee89b.js">
+
+  <link rel="service-worker-src" href="/assets-cdn/worker/service-worker-5aade1ce2fbab0fc.js?current_user=akihey&amp;errors_url=https%3A%2F%2Fapi.github.com%2F_private%2Fbrowser%2Ferrors&amp;release=1f0fce1b05ca57b90dcc0317e8f2866e8ecb72df&amp;actor_id=52227066&amp;is_staff=false&amp;analytics_collector_url=https%3A%2F%2Fcollector.github.com%2Fgithub%2Fcollect">
+
+  <meta name="hostname" content="github.com">
+
+
+  <meta name="keyboard-shortcuts-preference" content="all">
+  <meta name="hovercards-preference" content="true">
+  <meta name="announcement-preference-hovercard" content="true">
+
+    <meta name="expected-hostname" content="github.com">
+
+  <link crossorigin="anonymous" media="all" rel="stylesheet" href="https://github.githubassets.com/assets/github-f825c0edd7ad57f8.css" />
+
+
+
+
+
+<meta name="turbo-body-classes" content="logged-in env-production page-responsive session-authentication">
+
+<div class="position-relative header-wrapper js-header-wrapper ">
+  <a href="#start-of-content" data-skip-target-assigned="false" class="tmp-p-3 color-bg-accent-emphasis color-fg-on-emphasis show-on-focus js-skip-to-content">Skip to content</a>
+
+  <span data-view-component="true" class="progress-pjax-loader Progress position-fixed width-full">
+<span style="width: 0%;" data-view-component="true" class="Progress-item progress-pjax-loader-bar left-0 top-0 color-bg-accent-emphasis"></span>
+
+  <link crossorigin="anonymous" media="all" rel="stylesheet" href="https://github.githubassets.com/assets/primer-react-css.67ce5bfeb067a35a.module.css" />
+
+<react-partialpartial-name="keyboard-shortcuts-dialog"data-ssr="false"data-attempted-ssr="false"data-react-profiling="false"
+
+
+
+
+
+
+
+
+
+      <div class="authentication-header-page" role="banner">
+
+  <div hidden="hidden" data-view-component="true" class="js-stale-session-flash stale-session-flash flash flash-warn flash-full">
+
+    <svg aria-hidden="true" data-component="Octicon" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-alert">
+<path d="M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path>
+
+<button id="icon-button-ff5a3ce5-946f-4a81-b8a2-eac26b090758" aria-labelledby="tooltip-856598f5-bf80-469c-8688-179fa2059952" type="button" data-view-component="true" class="Button Button--iconOnly Button--invisible Button--medium flash-close js-flash-close">  <svg aria-hidden="true" data-component="Octicon" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-x Button-visual">
+<path d="M3.72 3.72a.75.75 0 0 1 1.06 0L8 6.94l3.22-3.22a.749.749 0 0 1 1.275.326.749.749 0 0 1-.215.734L9.06 8l3.22 3.22a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215L8 9.06l-3.22 3.22a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042L6.94 8 3.72 4.78a.75.75 0 0 1 0-1.06Z"></path>
+
+
+
 </div>
 
-<script>
-const colors = ['#4990ca','#e8415b','#dee0da','#6faedb','#f06b80'];
-const stage = document.getElementById('stage');
-const leftCracker = document.getElementById('leftCracker');
-const rightCracker = document.getElementById('rightCracker');
 
-function play(){
-  document.querySelectorAll('.confetti').forEach(el => el.remove());
 
-  leftCracker.classList.remove('pop-left');
-  rightCracker.classList.remove('pop-right');
-  void leftCracker.offsetWidth;
 
-  leftCracker.classList.add('pop-left');
-  rightCracker.classList.add('pop-right');
 
-  burstFrom(70, 395, 1);
-  burstFrom(250, 395, -1);
-}
 
-function burstFrom(originX, originY, direction){
-  for(let i=0;i<18;i++){
-    const el = document.createElement('div');
-    el.className = 'confetti';
 
-    const angle = direction === 1
-      ? -115 + Math.random() * 70
-      : -135 - Math.random() * 70;
+<div id="js-flash-container" class="flash-container" data-turbo-replace>
 
-    const power = 55 + Math.random() * 90;
-    const rad = angle * Math.PI / 180;
-    const x = Math.cos(rad) * power;
-    const y = Math.sin(rad) * power;
 
-    el.style.left = originX + 'px';
-    el.style.top = originY + 'px';
-    el.style.background = colors[Math.floor(Math.random() * colors.length)];
-    el.style.width = 5 + Math.random() * 6 + 'px';
-    el.style.height = 5 + Math.random() * 8 + 'px';
-    el.style.setProperty('--x', x + 'px');
-    el.style.setProperty('--y', y + 'px');
-    el.style.setProperty('--r', 120 + Math.random() * 420 + 'deg');
-    el.style.animationDelay = Math.random() * .08 + 's';
 
-    if(Math.random() > .7) el.style.borderRadius = '50%';
+  <div>{{ message }}</div>
 
-    stage.appendChild(el);
-    requestAnimationFrame(() => el.classList.add('fly'));
-    setTimeout(() => el.remove(), 1500);
+</div>
+
+
+
+
+
+
+
+
+
+<div class="d-flex flex-column flex-auto tmp-mb-4">
+  <div class="d-flex flex-justify-center mb-2">
+    <img img_class="avatar" src="https://avatars.githubusercontent.com/u/52227066?s=100&amp;v=4" width="50" height="50" alt="@akihey" class=" avatar-user" />
+  </div>
+  <div class="text-center">
+    <h3 class="color-fg-default lh-condensed">akiabe</h3>
+    <h4 class="color-fg-muted lh-condensed text-normal">akihey</h4>
+  </div>
+</div>
+
+<div data-view-component="true" class="tmp-mb-4 flash flash-full">
+
+  <svg aria-hidden="true" data-component="Octicon" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-info float-left v-align-top mt-1 tmp-mt-1 mb-4 tmp-mb-4">
+<path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path>
+
+
+
+<div class="d-flex flex-justify-center">
+  <!-- '"` --><!-- </textarea></xmp> --></option></form><form data-turbo="false" action="/settings/two_factor_checkup" accept-charset="UTF-8" method="get">
+    <button style="width: 200px; height: 40px" type="submit" data-view-component="true" class="Button--primary Button--medium Button">  <span class="Button-content">
+<span class="Button-label">Verify 2FA now</span>
+
+  </main>
+
+      <div class="footer-session-authentication" role="contentinfo">
+<ul class="footer-session-authentication-links">
+    <li>
+      <a data-analytics-event="{&quot;category&quot;:&quot;Footer&quot;,&quot;action&quot;:&quot;go to Terms&quot;,&quot;label&quot;:&quot;text:terms&quot;}" href="https://docs.github.com/site-policy/github-terms/github-terms-of-service" data-view-component="true" class="Link--secondary Link">Terms</a>
+    </li>
+
+    <li>
+      <a data-analytics-event="{&quot;category&quot;:&quot;Footer&quot;,&quot;action&quot;:&quot;go to privacy&quot;,&quot;label&quot;:&quot;text:privacy&quot;}" href="https://docs.github.com/site-policy/privacy-policies/github-privacy-statement" data-view-component="true" class="Link--secondary Link">Privacy</a>
+    </li>
+
+    <li>
+      <a data-analytics-event="{&quot;category&quot;:&quot;Footer&quot;,&quot;action&quot;:&quot;go to docs&quot;,&quot;label&quot;:&quot;text:docs&quot;}" href="https://docs.github.com" data-view-component="true" class="Link--secondary Link">Docs</a>
+    </li>
+
+    <li>
+        <a data-analytics-event="{&quot;category&quot;:&quot;Footer&quot;,&quot;action&quot;:&quot;go to contact&quot;,&quot;label&quot;:&quot;text:contact&quot;}" href="https://support.github.com" data-view-component="true" class="Link--secondary Link">Contact GitHub Support</a>
+    </li>
+
+</ul>
+
+
+
+
+
+<template id="site-details-dialog">
+
+<div class="Popover js-hovercard-content position-absolute" style="display: none; outline: none;">
+
+<template id="snippet-clipboard-copy-button">
+
+<style>
+  .user-mention[href$="/akihey"] {
+    color: var(--color-user-mention-fg);
+    background-color: var(--bgColor-attention-muted, var(--color-attention-subtle));
+    border-radius: 2px;
+    margin-left: -2px;
+    margin-right: -2px;
   }
-}
+  .user-mention[href$="/akihey"]:before,
+  .user-mention[href$="/akihey"]:after {
+    content: '';
+    display: inline-block;
+    width: 2px;
+  }
+</style>
 
-window.onload = play;
-</script>
 
-</body>
-</html>
+</div>
+<div id="js-global-screen-reader-notice" class="sr-only mt-n1" aria-live="polite" aria-atomic="true" ></div>
+<div id="js-global-screen-reader-notice-assertive" class="sr-only mt-n1" aria-live="assertive" aria-atomic="true"></div>
+
