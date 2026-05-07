@@ -3,751 +3,172 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>VERSION by STORES #3 ミッションクイズ</title>
-
+<title>クラッカー（軽くパンッ版）</title>
 <style>
 body {
-  font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
   margin: 0;
-  padding: 24px 0 40px;
-  color: #1e2b4f;
-  background:
-    radial-gradient(circle at top left, rgba(13,110,253,.12), transparent 18%),
-    radial-gradient(circle at top right, rgba(244,67,54,.12), transparent 20%),
-    linear-gradient(180deg, #f8fbff 0%, #eef4ff 55%, #f7f8fb 100%);
   min-height: 100vh;
-}
-
-.header,
-.container {
-  max-width: 450px;
-  width: 92%;
-  margin: 0 auto 16px;
-  box-sizing: border-box;
-}
-
-.header {
-  padding: 22px;
-  border-radius: 26px;
-  background: #051a40;
-  color: #fff;
-  box-shadow: 0 20px 42px rgba(15,30,70,.16);
-  overflow: hidden;
-  position: relative;
-}
-
-.header::before,
-.header::after {
-  content: "";
-  position: absolute;
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-  opacity: .22;
-}
-
-.header::before {
-  background: #3c6fff;
-  top: -50px;
-  left: -50px;
-}
-
-.header::after {
-  background: #ff4f79;
-  right: -50px;
-  bottom: -50px;
-}
-
-.header-inner {
-  position: relative;
-  z-index: 1;
-}
-
-.brand-mark {
-  display: inline-flex;
-  gap: 8px;
-  align-items: center;
-  padding: 8px 14px;
-  border-radius: 999px;
-  background: rgba(255,255,255,.12);
-  font-size: .88rem;
-  font-weight: 800;
-}
-
-.brand-mark span {
-  width: 26px;
-  height: 26px;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 50%;
-  background: #ff4f79;
-}
-
-.header h1 {
-  margin: 14px 0 8px;
-  font-size: 1.65rem;
-}
-
-.header p {
-  margin: 0;
-  line-height: 1.7;
-  font-size: .94rem;
-  color: rgba(255,255,255,.88);
-}
-
-.container {
-  background: #fff;
-  border-radius: 28px;
-  padding: 24px;
-  box-shadow: 0 18px 44px rgba(72,84,104,.12);
-}
-
-.name-panel {
-  margin-bottom: 20px;
-  padding: 18px;
-  border-radius: 20px;
-  background: linear-gradient(135deg, #eef5ff, #f5f9ff);
-  border: 2px solid #1d5cff;
-  box-shadow: 0 10px 24px rgba(29,92,255,.12);
-}
-
-.name-panel label {
-  display: block;
-  font-weight: 900;
-  margin-bottom: 10px;
-  font-size: 1rem;
-  color: #1d5cff;
-}
-
-.name-panel input {
-  width: 100%;
-  box-sizing: border-box;
-  padding: 14px 16px;
-  border-radius: 14px;
-  border: 2px solid #1d5cff;
-  font-size: 1rem;
-  outline: none;
-}
-
-.status-panel {
-  margin-bottom: 20px;
-}
-
-.status-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-}
-
-.status-text {
-  font-weight: 800;
-  font-size: .95rem;
-}
-
-.hint-btn {
-  border: 1px solid #dbe5ff;
-  background: #eef5ff;
-  color: #1d5cff;
-  border-radius: 999px;
-  padding: 10px 14px;
-  font-weight: 800;
-  cursor: pointer;
-}
-
-.progress-bar {
-  height: 10px;
-  border-radius: 999px;
-  background: #eef4ff;
-  overflow: hidden;
-  margin-top: 10px;
-}
-
-.progress-fill {
-  width: 0%;
-  height: 100%;
-  background: linear-gradient(90deg, #1d5cff, #4a86ff);
-  transition: width .25s ease;
-}
-
-.question {
-  margin-bottom: 22px;
-  padding: 18px;
-  border-radius: 22px;
-  background: #fbfdff;
-  border: 1px solid rgba(42,79,198,.13);
-}
-
-.question h3 {
-  margin: 0 0 14px;
-  font-size: 1rem;
-  line-height: 1.65;
-}
-
-.options {
   display: grid;
-  gap: 12px;
+  place-items: center;
+  font-family: sans-serif;
+  background: radial-gradient(circle at top, rgba(73,144,202,0.15), transparent 30%), linear-gradient(180deg,#f7fafc,#dee0da);
 }
 
-.option {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 14px 16px;
-  border-radius: 18px;
-  border: 1px solid #d8e5ff;
-  background: #fff;
-  cursor: pointer;
-  transition: .2s ease;
-}
-
-.option::before {
-  content: "";
-  width: 18px;
-  height: 18px;
-  border: 2px solid #9dbdff;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-
-.option.selected {
-  border-color: #1d5cff;
-  background: #ebf1ff;
-  box-shadow: 0 10px 22px rgba(29,92,255,.12);
-}
-
-.option.selected::before {
-  background: #1d5cff;
-  box-shadow: inset 0 0 0 4px #fff;
-}
-
-.option input {
-  display: none;
-}
-
-.option label {
-  flex: 1;
-  cursor: pointer;
-  line-height: 1.6;
-}
-
-.submit-btn,
-.retry-btn {
-  width: 100%;
-  border-radius: 16px;
-  padding: 16px;
-  font-size: 1.05rem;
-  font-weight: 900;
-  cursor: pointer;
-}
-
-.submit-btn {
-  color: #fff;
-  border: none;
-  background: linear-gradient(135deg, #1d5cff, #3a79ff);
-  box-shadow: 0 14px 28px rgba(29,92,255,.22);
-}
-
-.submit-btn:disabled {
-  background: #cad6f3;
-  color: #7a86a7;
-  box-shadow: none;
-  cursor: not-allowed;
-}
-
-.result {
-  display: none;
+.stage {
+  position: relative;
+  width: 320px;
+  height: 500px;
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 20px;
   text-align: center;
-}
-
-.result-card {
-  position: relative;
+  box-shadow: 0 20px 40px rgba(73,144,202,0.16);
   overflow: hidden;
-  min-height: 520px;
-  border-radius: 30px;
-  padding: 44px 24px 34px;
-  background: #fff;
-  box-shadow: 0 22px 52px rgba(36,74,147,.14);
 }
 
-.success-content,
-.failure-content {
-  position: relative;
-  z-index: 5;
+h1 {
+  font-size: 28px;
+  color: #e8415b;
 }
 
-.success-content {
-  isolation: isolate;
+button {
+  margin-top: 20px;
+  padding: 12px;
+  width: 100%;
+  border-radius: 10px;
+  border: none;
+  background: #4990ca;
+  color: #ffffff;
+  font-weight: bold;
 }
 
-.success-content::before {
-  content: "";
+.cracker {
   position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(circle at center,
-      rgba(255,255,255,.72) 0%,
-      rgba(255,255,255,.18) 45%,
-      transparent 75%);
-  z-index: 0;
-  pointer-events: none;
-}
-
-.success-content > * {
-  position: relative;
+  bottom: 22px;
+  font-size: 42px;
   z-index: 2;
 }
 
-.failure-note {
-  margin-top: 10px;
-  color: #d42d2d;
-  font-weight: 700;
+.left { left: 24px; transform: rotate(-20deg); }
+.right { right: 24px; transform: rotate(20deg); }
+
+.cracker.pop-left {
+  animation: popLeft .35s ease-out;
 }
 
-.wrong-questions {
-  margin: 16px 0 0 0;
-  padding-left: 18px;
-  text-align: left;
-  color: #1f3e72;
+.cracker.pop-right {
+  animation: popRight .35s ease-out;
 }
 
-.wrong-questions li {
-  margin-bottom: 8px;
+@keyframes popLeft {
+  0% { transform: rotate(-20deg) scale(1); }
+  35% { transform: rotate(-28deg) scale(1.12) translate(-2px, 2px); }
+  100% { transform: rotate(-20deg) scale(1); }
 }
 
-.hidden {
-  display: none;
-}
-
-.crown {
-  font-size: 4rem;
-  margin-bottom: 12px;
-  animation: crown-pop .8s cubic-bezier(.2,1.6,.4,1) both;
-}
-
-@keyframes crown-pop {
-  0% { transform: translateY(20px) scale(0); opacity: 0; }
-  70% { transform: translateY(-8px) scale(1.15); opacity: 1; }
-  100% { transform: translateY(0) scale(1); }
-}
-
-.success {
-  color: #ff3b6b;
-  font-size: 2rem;
-  line-height: 1.45;
-  margin: 0;
-  letter-spacing: -.04em;
-  word-break: keep-all;
-  line-break: strict;
-}
-
-.failure {
-  color: #d32f2f;
-  font-size: 1.8rem;
-}
-
-.result p {
-  line-height: 1.9;
-  color: #405174;
-}
-
-.retry-btn {
-  margin-top: 24px;
-  background: #fff;
-  color: #1d5cff;
-  border: 2px solid #1d5cff;
-}
-
-/* 背景の放射花火 */
-.celebration-burst {
-  position: absolute;
-  width: 270px;
-  height: 270px;
-  border-radius: 50%;
-  opacity: 0;
-  z-index: 1;
-  pointer-events: none;
-  background: conic-gradient(
-    from 0deg,
-    rgba(255, 91, 138, .28),
-    transparent 7%,
-    rgba(255, 212, 90, .24),
-    transparent 15%,
-    rgba(91, 168, 255, .26),
-    transparent 24%,
-    rgba(155, 92, 255, .22),
-    transparent 34%,
-    rgba(53, 201, 111, .20),
-    transparent 46%,
-    rgba(255, 91, 138, .18),
-    transparent 58%
-  );
-  filter: blur(.5px);
-}
-
-.celebration-burst.left {
-  left: -45px;
-  top: 145px;
-}
-
-.celebration-burst.right {
-  right: -45px;
-  top: 105px;
-}
-
-.celebration-burst.animate {
-  animation: soft-burst 1.45s ease-out forwards;
-}
-
-@keyframes soft-burst {
-  0% {
-    opacity: 0;
-    transform: scale(.35) rotate(-10deg);
-  }
-  30% {
-    opacity: .92;
-  }
-  100% {
-    opacity: .45;
-    transform: scale(1.15) rotate(8deg);
-  }
-}
-
-/* 紙吹雪 */
-.confetti-container {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  pointer-events: none;
-  z-index: 2;
+@keyframes popRight {
+  0% { transform: rotate(20deg) scale(1); }
+  35% { transform: rotate(28deg) scale(1.12) translate(2px, 2px); }
+  100% { transform: rotate(20deg) scale(1); }
 }
 
 .confetti {
   position: absolute;
-  top: 62%;
-  left: 50%;
+  width: 7px;
+  height: 7px;
+  border-radius: 2px;
   opacity: 0;
-  border-radius: 999px;
-  transform-origin: center;
+  z-index: 1;
 }
 
-.confetti.animate {
-  animation: confetti-boom var(--duration) cubic-bezier(.12,.75,.32,1) forwards;
+.confetti.fly {
+  animation: softPop 1.35s ease-out forwards;
 }
 
-@keyframes confetti-boom {
+@keyframes softPop {
   0% {
     opacity: 0;
-    transform: translate(0,0) rotate(0deg) scale(.4);
+    transform: translate(0,0) rotate(0deg) scale(.5);
   }
-  14% {
-    opacity: .85;
-    transform: translate(calc(var(--x) * .55), calc(var(--y) * .65)) rotate(var(--r)) scale(1);
+  12% {
+    opacity: 1;
+    transform: translate(calc(var(--x) * .45), calc(var(--y) * .45)) rotate(80deg) scale(1.05);
   }
-  38% {
-    opacity: .8;
-    transform: translate(var(--x), var(--y)) rotate(calc(var(--r) + 180deg)) scale(.95);
+  45% {
+    opacity: 1;
+    transform: translate(var(--x), var(--y)) rotate(var(--r)) scale(1);
   }
   100% {
     opacity: 0;
-    transform: translate(calc(var(--x) * 1.2), 520px) rotate(calc(var(--r) + 520deg)) scale(.7);
-  }
-}
-
-@media (max-width: 480px) {
-  .result-card {
-    min-height: 520px;
-    padding: 44px 20px 36px;
-  }
-
-  .success {
-    font-size: 1.75rem;
-  }
-
-  .result p {
-    margin-top: 22px;
-    font-size: 0.95rem;
-  }
-
-  .celebration-burst {
-    width: 220px;
-    height: 220px;
-  }
-
-  .celebration-burst.left {
-    left: -58px;
-    top: 135px;
-  }
-
-  .celebration-burst.right {
-    right: -58px;
-    top: 105px;
+    transform: translate(calc(var(--x) * 1.08), calc(var(--y) + 90px)) rotate(calc(var(--r) + 180deg)) scale(.8);
   }
 }
 </style>
 </head>
-
 <body>
-<div class="header">
-  <div class="header-inner">
-    <div class="brand-mark"><span>#3</span>VERSION by STORES</div>
-    <h1>ミッションクイズ！</h1>
-    <p>
-      クイズに全問正解するとレアアイテムが当たるガチャがまわせるよ★<br>
-      全問正解したらカプセルガチャの近くにいるスタッフにミッションクリアの画面を見せてください♪♪
-    </p>
-  </div>
-</div>
 
-<div class="container quiz" id="quiz">
-  <div class="name-panel">
-    <label for="player-name">👤 お名前を入力してからスタート！</label>
-    <p style="font-size:0.85rem; color:#5a6a8f; margin-bottom:8px;">
-      ※入力するとクリア画面に名前が表示されます
-    </p>
-    <input id="player-name" type="text" placeholder="ニックネームでもOK" />
-  </div>
+<div class="stage" id="stage">
+  <h1>ミッションクリア！</h1>
+  <button onclick="play()">もう一回</button>
 
-  <div class="status-panel">
-    <div class="status-row">
-      <div class="status-text">全3問中 <strong id="answered-count">0</strong>問回答済み</div>
-      <button type="button" class="hint-btn" id="hint-btn">ヒントを見る</button>
-    </div>
-    <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
-  </div>
-
-  <div class="question">
-    <h3>問題1：みんなのFunパネルをチェック！この中で“実際にかぶっていたFun”はどれ？</h3>
-    <div class="options">
-      <div class="option" data-question="1" data-value="麻雀 🀄"><input type="radio"><label>麻雀 🀄</label></div>
-      <div class="option" data-question="1" data-value="毒ガエル 🐸"><input type="radio"><label>毒ガエル 🐸</label></div>
-      <div class="option" data-question="1" data-value="フィールサイクル 🚲"><input type="radio"><label>フィールサイクル 🚲</label></div>
-    </div>
-  </div>
-
-  <div class="question">
-    <h3>問題2：フォトゾーンをチェック！置いていないフォトプロップスはどれ？</h3>
-    <div class="options">
-      <div class="option" data-question="2" data-value="ありがとんかつ！"><input type="radio"><label>ありがとんかつ！</label></div>
-      <div class="option" data-question="2" data-value="わいわい"><input type="radio"><label>わいわい</label></div>
-      <div class="option" data-question="2" data-value="ありがとぉねぇ"><input type="radio"><label>ありがとぉねぇ</label></div>
-      <div class="option" data-question="2" data-value="ありがたや〜"><input type="radio"><label>ありがたや〜</label></div>
-    </div>
-  </div>
-
-  <div class="question">
-    <h3>問題3：あのときは助かったよ展に貼れるシールは？</h3>
-    <div class="options">
-      <div class="option" data-question="3" data-value="♡"><input type="radio"><label>♡</label></div>
-      <div class="option" data-question="3" data-value="★"><input type="radio"><label>★</label></div>
-      <div class="option" data-question="3" data-value="✌"><input type="radio"><label>✌</label></div>
-      <div class="option" data-question="3" data-value="♪"><input type="radio"><label>♪</label></div>
-    </div>
-  </div>
-
-  <button class="submit-btn" id="submit-btn" disabled>採点する</button>
-</div>
-
-<div class="container result" id="result">
-  <div class="result-card">
-    <div class="confetti-container" id="confetti-container"></div>
-
-    <div id="success-content" class="hidden success-content">
-      <div class="celebration-burst left"></div>
-      <div class="celebration-burst right"></div>
-      <div class="crown">🎉</div>
-
-      <h2 class="success" id="success-title">ミッションクリア！</h2>
-      <p>
-        全問正解おめでとうございます！<br>
-        スタッフにこの画面を見せて、<br>
-        ガチャにチャレンジしてね♪
-      </p>
-    </div>
-
-    <div id="failure-content" class="hidden failure-content">
-      <h2 class="failure">あと少し！</h2>
-      <p id="failure-note">
-        どこかの答えが違うみたいです。<br>
-        会場をもう一度チェックしてみてね！
-      </p>
-      <ul id="wrong-questions" class="wrong-questions"></ul>
-      <button class="retry-btn" onclick="retry()">もう一度チャレンジする</button>
-    </div>
-  </div>
+  <div class="cracker left" id="leftCracker">🎉</div>
+  <div class="cracker right" id="rightCracker">🎉</div>
 </div>
 
 <script>
-const answers = {
-  1: "フィールサイクル 🚲",
-  2: "ありがたや〜",
-  3: "♡"
-};
+const colors = ['#4990ca','#e8415b','#dee0da','#6faedb','#f06b80'];
+const stage = document.getElementById('stage');
+const leftCracker = document.getElementById('leftCracker');
+const rightCracker = document.getElementById('rightCracker');
 
-let selectedAnswers = {};
+function play(){
+  document.querySelectorAll('.confetti').forEach(el => el.remove());
 
-const quiz = document.getElementById("quiz");
-const result = document.getElementById("result");
-const playerNameInput = document.getElementById("player-name");
-const submitBtn = document.getElementById("submit-btn");
-const answeredCount = document.getElementById("answered-count");
-const progressFill = document.getElementById("progress-fill");
+  leftCracker.classList.remove('pop-left');
+  rightCracker.classList.remove('pop-right');
+  void leftCracker.offsetWidth;
 
-playerNameInput.addEventListener("input", updateProgress);
+  leftCracker.classList.add('pop-left');
+  rightCracker.classList.add('pop-right');
 
-document.querySelectorAll(".option").forEach(option => {
-  option.addEventListener("click", () => {
-    const question = option.dataset.question;
-    const value = option.dataset.value;
-
-    selectedAnswers[question] = value;
-
-    option.parentElement.querySelectorAll(".option").forEach(opt => {
-      opt.classList.remove("selected");
-      opt.querySelector("input").checked = false;
-    });
-
-    option.classList.add("selected");
-    option.querySelector("input").checked = true;
-
-    updateProgress();
-  });
-});
-
-document.getElementById("hint-btn").addEventListener("click", () => {
-  alert("会場の写真パネル、フォトゾーン、あの時は助かったよ展をもう一度見てみよう！");
-});
-
-function updateProgress() {
-  const count = Object.keys(selectedAnswers).length;
-  answeredCount.textContent = count;
-  progressFill.style.width = `${count / 3 * 100}%`;
-  submitBtn.disabled = count !== 3;
+  burstFrom(70, 395, 1);
+  burstFrom(250, 395, -1);
 }
 
-submitBtn.addEventListener("click", () => {
-  const wrongQuestions = Object.keys(answers).filter(q => selectedAnswers[q] !== answers[q]);
-  const isCorrect = wrongQuestions.length === 0;
+function burstFrom(originX, originY, direction){
+  for(let i=0;i<18;i++){
+    const el = document.createElement('div');
+    el.className = 'confetti';
 
-  quiz.style.display = "none";
-  result.style.display = "block";
+    const angle = direction === 1
+      ? -115 + Math.random() * 70
+      : -135 - Math.random() * 70;
 
-  if (isCorrect) {
-    const playerName = playerNameInput.value.trim();
-    const displayName = playerName ? `${playerName}さん` : "👏👏👏";
+    const power = 55 + Math.random() * 90;
+    const rad = angle * Math.PI / 180;
+    const x = Math.cos(rad) * power;
+    const y = Math.sin(rad) * power;
 
-    document.getElementById("success-title").textContent =
-      `${displayName} ミッションクリア！`;
+    el.style.left = originX + 'px';
+    el.style.top = originY + 'px';
+    el.style.background = colors[Math.floor(Math.random() * colors.length)];
+    el.style.width = 5 + Math.random() * 6 + 'px';
+    el.style.height = 5 + Math.random() * 8 + 'px';
+    el.style.setProperty('--x', x + 'px');
+    el.style.setProperty('--y', y + 'px');
+    el.style.setProperty('--r', 120 + Math.random() * 420 + 'deg');
+    el.style.animationDelay = Math.random() * .08 + 's';
 
-    document.getElementById("success-content").classList.remove("hidden");
-    document.getElementById("failure-content").classList.add("hidden");
+    if(Math.random() > .7) el.style.borderRadius = '50%';
 
-    triggerCelebration();
-  } else {
-    document.getElementById("success-content").classList.add("hidden");
-    document.getElementById("failure-content").classList.remove("hidden");
-    showWrongQuestions(wrongQuestions);
-  }
-
-  window.scrollTo({ top: 0, behavior: "smooth" });
-});
-
-function retry() {
-  selectedAnswers = {};
-
-  document.querySelectorAll(".option").forEach(option => {
-    option.classList.remove("selected");
-    option.querySelector("input").checked = false;
-  });
-
-  document.getElementById("success-content").classList.add("hidden");
-  document.getElementById("failure-content").classList.add("hidden");
-  document.getElementById("confetti-container").innerHTML = "";
-  document.getElementById("wrong-questions").innerHTML = "";
-  document.getElementById("failure-note").textContent = "どこかの答えが違うみたいです。会場をもう一度チェックしてみてね！";
-
-  document.querySelectorAll(".celebration-burst").forEach(b => {
-    b.classList.remove("animate");
-  });
-
-  result.style.display = "none";
-  quiz.style.display = "block";
-
-  updateProgress();
-  window.scrollTo({ top: 0, behavior: "smooth" });
-}
-
-function showWrongQuestions(wrongQuestions) {
-  const wrongList = document.getElementById("wrong-questions");
-  wrongList.innerHTML = "";
-  wrongQuestions.forEach(q => {
-    const li = document.createElement("li");
-    li.textContent = `問題${q} が間違っています。`;
-    wrongList.appendChild(li);
-  });
-}
-
-
-function triggerCelebration() {
-  const bursts = document.querySelectorAll(".celebration-burst");
-
-  bursts.forEach(b => {
-    b.classList.remove("animate");
-    void b.offsetWidth;
-    b.classList.add("animate");
-  });
-
-  createConfetti(45);
-
-  setTimeout(() => {
-    createConfetti(25);
-  }, 520);
-}
-
-function createConfetti(count) {
-  const container = document.getElementById("confetti-container");
-  const colors = ["#ff3b6b", "#1d5cff", "#ffcf24", "#35c96f", "#9b5cff", "#00bcd4"];
-
-  for (let i = 0; i < count; i++) {
-    const piece = document.createElement("div");
-    piece.className = "confetti";
-
-    const fromLeft = Math.random() < 0.5;
-    const startX = fromLeft ? 18 : 82;
-    const startY = 75;
-
-    const xDirection = fromLeft ? 1 : -1;
-    const x = xDirection * (80 + Math.random() * 260);
-    const y = -180 - Math.random() * 260;
-    const size = 5 + Math.random() * 8;
-
-    piece.style.left = `${startX}%`;
-    piece.style.top = `${startY}%`;
-    piece.style.width = `${size}px`;
-    piece.style.height = `${size * (0.55 + Math.random() * 0.8)}px`;
-    piece.style.background = colors[Math.floor(Math.random() * colors.length)];
-    piece.style.setProperty("--x", `${x}px`);
-    piece.style.setProperty("--y", `${y}px`);
-    piece.style.setProperty("--r", `${Math.random() * 720}deg`);
-    piece.style.setProperty("--duration", `${2.4 + Math.random() * 1.4}s`);
-    piece.style.animationDelay = `${Math.random() * 0.25}s`;
-
-    if (Math.random() > 0.65) {
-      piece.style.borderRadius = "50%";
-    }
-
-    container.appendChild(piece);
-
-    requestAnimationFrame(() => {
-      piece.classList.add("animate");
-    });
-
-    setTimeout(() => {
-      piece.remove();
-    }, 4200);
+    stage.appendChild(el);
+    requestAnimationFrame(() => el.classList.add('fly'));
+    setTimeout(() => el.remove(), 1500);
   }
 }
+
+window.onload = play;
 </script>
+
 </body>
 </html>
