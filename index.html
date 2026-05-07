@@ -114,6 +114,36 @@ body {
   gap: 12px;
 }
 
+.input-group {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.input-group label {
+  font-weight: 700;
+  color: #1e2b4f;
+}
+
+.input-group input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 14px 16px;
+  border-radius: 18px;
+  border: 1px solid rgba(73,144,202,.2);
+  background: #fff;
+  font-size: 1rem;
+  color: #1e2b4f;
+  box-shadow: inset 0 4px 12px rgba(73,144,202,.06);
+}
+
+.input-group input:focus {
+  outline: none;
+  border-color: #4990ca;
+  box-shadow: 0 0 0 4px rgba(73,144,202,.12);
+}
+
 .status-text {
   font-weight: 800;
   font-size: .95rem;
@@ -289,6 +319,14 @@ body {
   100% { transform: translateY(0) scale(1); }
 }
 
+.success-name {
+  color: #e8415b;
+  font-size: 2rem;
+  font-weight: 900;
+  margin: 0 0 8px;
+  letter-spacing: -.04em;
+}
+
 .success {
   color: #e8415b;
   font-size: 2rem;
@@ -426,9 +464,14 @@ body {
   <div class="status-panel">
     <div class="status-row">
       <div class="status-text">全3問中 <strong id="answered-count">0</strong>問回答済み</div>
-      <button type="button" class="hint-btn" id="hint-btn">ヒントを見る</button>
+      <button type="button" class="hint-btn" id="hint-btn">ヒント🌟</button>
     </div>
     <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+  </div>
+
+  <div class="input-group">
+    <label for="player-name">お名前</label>
+    <input type="text" id="player-name" placeholder="ニックネームでもOK" />
   </div>
 
   <div class="question">
@@ -471,6 +514,7 @@ body {
 
     <div id="success-content" class="hidden success-content">
       <div class="crown">🎉</div>
+          <p id="success-name" class="success-name"></p>
       <h2 class="success">ミッションクリア！</h2>
       <p>
         全問正解おめでとうございます！<br>
@@ -505,6 +549,8 @@ const result = document.getElementById("result");
 const submitBtn = document.getElementById("submit-btn");
 const answeredCount = document.getElementById("answered-count");
 const progressFill = document.getElementById("progress-fill");
+const playerNameInput = document.getElementById("player-name");
+const successName = document.getElementById("success-name");
 
 document.querySelectorAll(".option").forEach(option => {
   option.addEventListener("click", () => {
@@ -526,7 +572,7 @@ document.querySelectorAll(".option").forEach(option => {
 });
 
 document.getElementById("hint-btn").addEventListener("click", () => {
-  alert("会場のFunパネル、フォトゾーン、あのときは助かったよ展をもう一度見てみよう！");
+  alert("会場のFunパネル（顔写真パネル）、フォトゾーン、あの時は助かったよ展、をもう一度見てみよう！");
 });
 
 function updateProgress() {
@@ -544,6 +590,8 @@ submitBtn.addEventListener("click", () => {
   result.style.display = "block";
 
   if (isCorrect) {
+    const name = playerNameInput.value.trim();
+    successName.textContent = name ? `${name}さん` : "";
     document.getElementById("success-content").classList.remove("hidden");
     document.getElementById("failure-content").classList.add("hidden");
     triggerCelebration();
@@ -591,7 +639,7 @@ function showWrongQuestions(wrongQuestions) {
   wrongList.innerHTML = "";
   wrongQuestions.forEach(q => {
     const li = document.createElement("li");
-    li.textContent = `問題${q} が間違っています。`; 
+    li.textContent = `問題${q} が間違ってます👀`; 
     wrongList.appendChild(li);
   });
 }
